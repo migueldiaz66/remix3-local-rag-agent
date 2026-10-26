@@ -21,6 +21,7 @@ invalidating the layer cache of the install step.
 | `Dockerfile`, `.dockerignore`, `docker` | The Docker files themselves. |
 | `app/actions/public/flow/flow-bundle.*` | A bundle built on the host. The image builds its own in the `build` stage. |
 | `*_README.md`, `CONTRIBUTING.md`, `AGENTS.md`, `CLAUDE.md`, `.agents`, `README.md` | Documents and agent guides, not needed to run. |
+| `.secrets` | The saved screenshot of a registry access token. It must never enter a build context, and so never a layer of an image. |
 
 ## What stays in
 

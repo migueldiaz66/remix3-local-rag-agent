@@ -30,3 +30,5 @@ CLAUDE.md
 .agents
 # The README is not needed to run.
 README.md
+# Private files that must never reach an image: the saved screenshot of a registry access token.
+.secrets

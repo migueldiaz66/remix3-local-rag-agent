@@ -57,8 +57,9 @@ are already in the volume and the ingest replaces the collection in seconds.
   no curl, so its check opens a TCP connection. Ollama's check runs `ollama list`, which needs the
   server to answer.
 - **`image` and `build` together.** `up --build` builds the image from the repository and tags it
-  with the registry name. Without `--build`, Compose uses the image if it exists locally and
-  otherwise tries to pull `ghcr.io/migueldiaz66/remix3-local-rag-agent:latest`.
+  `mdiazm01/remix3-local-rag-agent:0.1.0`. Without `--build`, Compose uses the image if it exists
+  locally and otherwise pulls it from Docker Hub, 120 MB compressed. The tag is pinned like the
+  Qdrant and Ollama ones: a new version of the app image means a new tag here.
 - **The models.** The compose file names them in the `models` job, and `app/ai/config.ts` names
   them as defaults. Change them in both places, or set `CHAT_MODEL` and `EMBED_MODEL` on the app
   and the ingest.
@@ -100,9 +101,13 @@ leave out the `ollama` and `models` services.
 - **No sign-in and no rate limit**, as in the rest of the project.
 - **Nothing is published to a registry.** See below.
 
-## Where to publish the image
+## Where the image is published
 
-The image of this project is the app only, 471 MB on the author's machine. Two registries fit.
+It is published on Docker Hub, as `mdiazm01/remix3-local-rag-agent` with the tags `latest`, `0.1.0`
+and `68c77ba`. The push to GitHub's registry was refused, because the token in use cannot write
+container packages. What is stored, the digests, how it was pushed and how to finish the GitHub
+side are in [docs/image-registries.md](../docs/image-registries.md). The comparison that led to
+considering both:
 
 | | GitHub Container Registry, `ghcr.io` | Docker Hub |
 |---|---|---|
@@ -112,11 +117,6 @@ The image of this project is the app only, 471 MB on the author's machine. Two r
 | Publishing from CI | `GITHUB_TOKEN` in a GitHub Action, no extra secret | A Docker Hub account and an access token stored as a repository secret |
 | Discoverability | Found through the repository | Found through Docker Hub's search, where most people look for images |
 
-The recommendation is `ghcr.io`: the code, the image and the build live in one place, nothing
-extra needs a secret, and the pull limits are not a worry for a project that people will try once.
-Docker Hub is worth adding only if being found by search matters. Both can be published from the
-same workflow. Publishing writes to GitHub, so it waits for the author's word.
-
-A tag policy, when it is published: `latest` for the newest release, a version tag such as `0.1.0`
-for each release, and the commit hash for traceability. A multi-architecture build for `amd64` and
-`arm64` would let it run on Apple Silicon without emulation.
+The tag policy in use: `latest` for the newest release, a version tag such as `0.1.0` for each
+release, and the commit hash for traceability. Only `linux/amd64` is built; a multi-architecture
+build would let it run on Apple Silicon without emulation.

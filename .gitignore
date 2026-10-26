@@ -14,3 +14,5 @@ app/actions/public/flow/flow-bundle.js
 app/actions/public/flow/flow-bundle.js.map
 # The bundle's stylesheet, built with it.
 app/actions/public/flow/flow-bundle.css
+# Private files that must never be published: the saved screenshot of a registry access token.
+.secrets/

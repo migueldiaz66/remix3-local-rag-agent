@@ -5374,8 +5374,9 @@ Measured once on 26 October 2026 in a Docker VM of 4 cores: the app image is 471
 Ollama image 8.43 GB, the first start took 18 min 33 s on a slow connection, a start with
 everything downloaded 39 s, and a RAG question 53 s the first time and 10 s after that. Two later
 runs on a busier laptop gave 61 and 103 s, and 12 to 31 s: the raw numbers, the three sizes of the
-image and the CPU and memory of each container are in `docs/docker-run.md`. The image is not
-published to a registry. The sidecar compares `ghcr.io` with Docker Hub.
+image and the CPU and memory of each container are in `docs/docker-run.md`. The image is
+published on Docker Hub, `mdiazm01/remix3-local-rag-agent`, and `docs/image-registries.md` says
+what is stored there; the push to GitHub's container registry was refused.
 
 ### 13.3 For implementers
 
@@ -6589,6 +6590,7 @@ Root:
 | `dockerignore_README.md` | Sidecar for `.dockerignore` | part 13, operating |
 | `docker/compose.stack.yml` | The whole stack: Qdrant, Ollama, the model job, the ingest job and the app | part 13, operating |
 | `docker/compose.stack.yml_README.md` | Sidecar for `compose.stack.yml`: order, settings, measurements, where to publish | part 13, operating |
+| `docs/image-registries.md` | Where the image is stored on Docker Hub and GitHub: addresses, tags, digests, sizes, limits, who can push, what is unfinished | part 13, operating; README, Run it with Docker |
 | `docs/docker-run.md` | The Docker stack run: conditions, image sizes, starts, questions, CPU and memory | part 13, operating; README, Run it with Docker |
 | `docs/docker-run/` | The raw outputs of that run: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
 | `docs/codespaces-run.md` | The first run in a real codespace: how it is created, the screenshots, the results | part 13, operating; README, Try it in your browser |

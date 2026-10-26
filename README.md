@@ -155,8 +155,11 @@ models once, stores the article, and only then starts the app. Only your own mac
   [docs/docker-run.md](docs/docker-run.md).
 - Stop it with `docker compose -f docker/compose.stack.yml down`. Add `-v` to also delete the
   downloaded models and the vector store.
-- The app image is 471 MB and is not published to a registry yet. The order of the services and
-  the choice of registry are in
+- The app image is 471 MB on disk, 120 MB to download, and is published on Docker Hub:
+  `docker pull mdiazm01/remix3-local-rag-agent:0.1.0`. The compose file pulls it by itself, and
+  builds it from the repository only with `--build`. It is for `linux/amd64`. The push to GitHub's
+  container registry was refused and is not done; where it is stored, and why, is in
+  [docs/image-registries.md](docs/image-registries.md). The order of the services is in
   [docker/compose.stack.yml_README.md](docker/compose.stack.yml_README.md), and the image itself
   in [Dockerfile_README.md](Dockerfile_README.md).
 

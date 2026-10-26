@@ -75,9 +75,9 @@ services:
 
   # A job that cuts the article into passages, embeds them and stores them in Qdrant, then exits.
   ingest:
-    # The app image: it carries scripts/ingest.ts and data/rag-wikipedia.md.
-    image: ghcr.io/migueldiaz66/remix3-local-rag-agent:latest
-    # Built from the repository when the image is not published or --build is given.
+    # The app image from Docker Hub, pinned to its version: it carries the ingest and the corpus.
+    image: mdiazm01/remix3-local-rag-agent:0.1.0
+    # Built from the repository instead, and tagged with that name, when --build is given.
     build:
       # The repository root, one folder up from this file.
       context: ..
@@ -107,8 +107,8 @@ services:
   # The app: the page, the chat endpoint, the three modes.
   app:
     # The same image as the ingest job.
-    image: ghcr.io/migueldiaz66/remix3-local-rag-agent:latest
-    # Built from the repository when the image is not published or --build is given.
+    image: mdiazm01/remix3-local-rag-agent:0.1.0
+    # Built from the repository instead, and tagged with that name, when --build is given.
     build:
       # The repository root, one folder up from this file.
       context: ..

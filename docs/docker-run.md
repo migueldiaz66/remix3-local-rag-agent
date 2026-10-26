@@ -49,10 +49,11 @@ Three commands give three sizes for the same image.
 |---|---|---|
 | `docker image ls` | 471 MB | What the image takes on disk |
 | `docker history`, the layers added up | about 352 MB | The sum of the layer sizes |
-| `docker image inspect`, field `Size` | 119,858,320 bytes | Probably the compressed content in the image store |
+| `docker image inspect`, field `Size` | 119,858,320 bytes | The compressed content in the image store |
 
-Which of the three is the "real" size depends on the question, and the last row is a guess: it was
-not checked.
+Which of the three is the "real" size depends on the question. The last one is the compressed
+size: Docker Hub reports 119,843,469 bytes for the same image once it was pushed
+([image-registries.md](image-registries.md)).
 
 The image has 14 layers and is built for `linux/amd64`. The big ones are the Node binary (157 MB),
 the production dependencies (101 MB) and the Debian base (85 MB). The app itself, source, bundle

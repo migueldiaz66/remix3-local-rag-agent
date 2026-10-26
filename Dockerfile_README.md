@@ -72,8 +72,9 @@ arm64 binary, so it should work, and nothing was run on arm64.
 
 ## Publishing
 
-The `source` label is what lets GitHub's container registry link the image to this repository. The
-choice between GitHub's registry and Docker Hub is discussed in
-[docker/compose.stack.yml_README.md](docker/compose.stack.yml_README.md), and the image is not
-published yet. The compose file already names it `ghcr.io/migueldiaz66/remix3-local-rag-agent`, so
-building it locally produces the name it would have once published.
+The image is published on Docker Hub as `mdiazm01/remix3-local-rag-agent`, with the tags `latest`,
+`0.1.0` and `68c77ba`, built with the labels `revision`, `version` and `created` added. The push to
+GitHub's container registry was refused; the `source` label is what will link the package to this
+repository once it is pushed. The details are in
+[docs/image-registries.md](docs/image-registries.md), and the compose file names the Docker Hub
+image, so building it locally produces the name that was published.

@@ -30,6 +30,11 @@ without a slash matches at any depth below; a trailing slash matches a folder on
   stale and produce merge conflicts.
 - `app/actions/public/flow/flow-bundle.js.map`: the bundle's source map, written with it.
 - `app/actions/public/flow/flow-bundle.css`: the bundle's stylesheet, written with it.
+- `.secrets/`: a folder for files that must never be published. It holds one file today,
+  `docker-hub-token.png`, a screenshot of the page that shows the Docker Hub access token used to
+  push the image. The token is live until it is revoked, so the folder is ignored by git, and by
+  `.dockerignore` too, and `git ls-files .secrets` must print nothing. Revoke the token at Docker
+  Hub, then delete the file. Nothing in `docs/` may carry a copy.
 
 The three bundle rules are listed one by one, rather than as `flow-bundle.*`, so that each line
 carries its own comment and so that a future `flow-bundle.d.ts`, should one be written by hand,
