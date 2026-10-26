@@ -5,6 +5,13 @@ elements of retrieval-augmented generation (RAG), all of them local: no cloud se
 key. A minimal web page draws the RAG pipeline as a diagram, next to a chat where you can ask the
 same question three ways and see what each way adds.
 
+The page is also a trial. [Remix 3](https://remix.run), a web framework rebuilt on web
+standards, without React, and designed to be built with coding agents, is the candidate this POC
+puts to the test, with one question: can a Remix 3 page host a React Flow diagram and a local AI
+chat? Here it can, as the measured results below show. The cost is small: React Flow is React, so
+the diagram runs as an island inside the page. The project uses Remix 3.1.0, a beta when this was
+written, and works from the docs that install with it. No other framework was tried side by side.
+
 By design, no framework is used for the vector generation (the embedding step) or for the chat
 UI. Both are plain code written by hand, so that coding them shows how these components work.
 [docs/notes-rag-and-frameworks.md](docs/notes-rag-and-frameworks.md) lists the frameworks that
