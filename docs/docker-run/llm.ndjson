@@ -1,0 +1,41 @@
+{"type":"token","text":"Chunk"}
+{"type":"token","text":"ing"}
+{"type":"token","text":" in"}
+{"type":"token","text":" R"}
+{"type":"token","text":"AG"}
+{"type":"token","text":" is"}
+{"type":"token","text":" the"}
+{"type":"token","text":" process"}
+{"type":"token","text":" of"}
+{"type":"token","text":" breaking"}
+{"type":"token","text":" down"}
+{"type":"token","text":" large"}
+{"type":"token","text":" text"}
+{"type":"token","text":" documents"}
+{"type":"token","text":" into"}
+{"type":"token","text":" smaller"}
+{"type":"token","text":","}
+{"type":"token","text":" manageable"}
+{"type":"token","text":" pieces"}
+{"type":"token","text":" called"}
+{"type":"token","text":" \""}
+{"type":"token","text":"chunks"}
+{"type":"token","text":".\""}
+{"type":"token","text":" These"}
+{"type":"token","text":" chunks"}
+{"type":"token","text":" are"}
+{"type":"token","text":" then"}
+{"type":"token","text":" used"}
+{"type":"token","text":" to"}
+{"type":"token","text":" answer"}
+{"type":"token","text":" user"}
+{"type":"token","text":" queries"}
+{"type":"token","text":" by"}
+{"type":"token","text":" retrieving"}
+{"type":"token","text":" relevant"}
+{"type":"token","text":" information"}
+{"type":"token","text":" from"}
+{"type":"token","text":" the"}
+{"type":"token","text":" chunks"}
+{"type":"token","text":"."}
+{"type":"done","model":"qwen3:1.7b","ms":16554}

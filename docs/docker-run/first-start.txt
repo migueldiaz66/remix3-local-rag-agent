@@ -1,0 +1,74 @@
+The first full start of the Docker stack, on 26 October 2026.
+
+PROVENANCE. These figures are copied by hand from the terminal output of that session. They cannot
+be captured again, because the containers of that first start no longer exist and the images and
+volumes are now in place. The other files in this folder come from docker-capture.sh, run
+afterwards, which is a restart with everything already downloaded.
+
+Conditions: Docker Desktop for Windows, Docker VM with 4 CPUs and 15.57 GiB, the author's laptop
+(Intel i7-6600U), a slow home connection, APP_PORT=44101 because port 44100 was in use, no GPU.
+The app image had been built before the start; the Qdrant and Ollama images were pulled by it.
+
+--- Build of the app image (docker build -t ghcr.io/migueldiaz66/remix3-local-rag-agent:latest .)
+real    1m40.223s
+size    471MB
+
+--- The image started alone, before the stack (docker run, port 44102)
+log      Server listening on http://localhost:44100
+page     200
+user     uid=1000(node) gid=1000(node)
+health   healthy at the check made 32 s after the start
+
+--- docker compose -f docker/compose.stack.yml up -d, first start
+up started          15:54:08 UTC (birth time of the log file the command wrote)
+qdrant started      16:08:20 UTC     (the images were pulled before this: 14 min 12 s)
+ollama started      16:08:20 UTC
+models started      16:08:27 UTC, finished 16:12:22 UTC, exit 0   (3 min 55 s, the two models)
+ingest started      16:12:23 UTC, finished 16:12:41 UTC, exit 0   (18 s)
+app started         16:12:41 UTC
+app health          listed healthy 11 s after its start
+total               15:54:08 to 16:12:41 UTC = 18 min 33 s from "up" to the app started
+
+--- docker compose ps -a, right after
+SERVICE   STATE     HEALTH     STATUS
+app       running   healthy    Up 11 seconds (healthy)
+ingest    exited               Exited (0) 11 seconds ago
+models    exited               Exited (0) 29 seconds ago
+ollama    running   healthy    Up 4 minutes (healthy)
+qdrant    running   healthy    Up 4 minutes (healthy)
+
+--- Ingest job log
+ingest-1  | embedding with nomic-embed-text at http://ollama:11434
+ingest-1  | recreating collection "rag-article" at http://qdrant:6333 (768 dimensions)
+ingest-1  | 16/25 (12.8s)
+ingest-1  | 25/25 (17.1s)
+ingest-1  | done: 25 points in "rag-article" at http://qdrant:6333 in 17.1s
+
+--- App log
+app-1  | Server listening on http://localhost:44100
+
+--- Images on disk (docker image ls)
+ghcr.io/migueldiaz66/remix3-local-rag-agent:latest   471MB
+ollama/ollama:0.40.11                                8.43GB
+qdrant/qdrant:v1.20.0                                281MB
+
+--- Volumes
+remix3-rag-stack_ollama_models
+remix3-rag-stack_qdrant_data
+
+--- Two RAG questions, "What is chunking in RAG?", through the stack
+question 1: first byte 0.197080s, whole answer 53.267935s   (the chat model loads)
+question 2: first byte 0.754705s, whole answer 9.759498s
+
+--- docker stats --no-stream, after the questions (memory limit 15.57GiB each)
+remix3-rag-stack-app-1      119MiB
+remix3-rag-stack-qdrant-1   27.3MiB
+remix3-rag-stack-ollama-1   3.709GiB
+
+--- A restart, volumes kept (docker compose down, then up -d)
+volumes kept             2
+up -d returned after     39 s
+app                      Up 16 seconds (healthy)
+ollama, qdrant           Up 49 seconds (healthy)
+page                     200
+question after restart   first byte 0.162193s, whole answer 52.136509s   (the model is loaded again)

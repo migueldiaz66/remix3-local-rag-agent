@@ -1,0 +1,4 @@
+Captured on 2026-10-26T16:41:17Z with docker-capture.sh (outside the repository).
+Docker server 29.1.3, VM with 4 CPUs and 16713482240 bytes of memory, Docker Desktop
+Host: Windows 11, Intel i7-6600U (2 cores, 4 threads), 32 GB, Docker Desktop. APP_PORT=44101.
+No GPU is configured. The images and both volumes already existed: this is a restart, not a first start.

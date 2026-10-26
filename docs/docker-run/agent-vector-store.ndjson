@@ -1,0 +1,28 @@
+{"type":"tool","name":"search_docs","args":{"query":"Where does the vector store fit in the pipeline?"}}
+{"type":"sources","sources":[{"id":"process-2","chapter":"Process","heading":"RAG key stages","lines":[21,23],"text":"### RAG key stages\n\nTypically, the data to be referenced is converted into LLM embeddings, numerical representations in the form of a large vector space. RAG can be used on unstructured (usually text), semi-structured, or structured data (for example knowledge graphs). These embeddings are then stored in a vector database to allow for document retrieval.","score":0.61992466},{"id":"improvements-2","chapter":"Improvements","heading":"Encoder","lines":[41,43],"text":"### Encoder\n\nThese methods focus on the encoding of text as either dense or sparse vectors. Sparse vectors, which encode the identity of a word, are typically dictionary-length and contain mostly zeros. Dense vectors, which encode meaning, are more compact and contain fewer zeros. Various enhancements can improve the way similarities are calculated in the vector stores (databases).","score":0.6080482},{"id":"improvements-10","chapter":"Improvements","heading":"Hybrid search","lines":[73,75],"text":"### Hybrid search\n\nSometimes vector database searches (aka semantic search technique) can miss key facts needed to answer a user's question. One way to mitigate this is to do a traditional text search (aka full text search), combine those results to the text chunks linked to the retrieved vectors from the vector search, and feed the combined hybrid text (using effective scoring or reranking scoring) into the language model for generation.","score":0.59144497}]}
+{"type":"tool","name":"highlight_node","args":{"id":"vector-store"}}
+{"type":"ui","action":"highlight-node","nodeId":"vector-store"}
+{"type":"token","text":"The"}
+{"type":"token","text":" vector"}
+{"type":"token","text":" store"}
+{"type":"token","text":" fits"}
+{"type":"token","text":" in"}
+{"type":"token","text":" the"}
+{"type":"token","text":" pipeline"}
+{"type":"token","text":" after"}
+{"type":"token","text":" the"}
+{"type":"token","text":" embedding"}
+{"type":"token","text":" step"}
+{"type":"token","text":"."}
+{"type":"token","text":" It"}
+{"type":"token","text":" stores"}
+{"type":"token","text":" the"}
+{"type":"token","text":" embeddings"}
+{"type":"token","text":" of"}
+{"type":"token","text":" the"}
+{"type":"token","text":" passages"}
+{"type":"token","text":" for"}
+{"type":"token","text":" later"}
+{"type":"token","text":" retrieval"}
+{"type":"token","text":"."}
+{"type":"done","model":"qwen3:1.7b","ms":128376}

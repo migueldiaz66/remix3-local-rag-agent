@@ -1,0 +1,142 @@
+# compose.stack.yml: the whole project as Docker containers: Qdrant, Ollama, the app and the ingest.
+# One command starts everything, downloads the two models once and fills the vector store:
+#   docker compose -f docker/compose.stack.yml up --build
+# Then open http://localhost:44100. Explained in compose.stack.yml_README.md beside this file.
+
+# The Compose project name, so this stack never shares containers or volumes with compose.yml.
+name: remix3-rag-stack
+
+# The containers this file manages: Qdrant, Ollama, a model puller, an ingest job and the app.
+services:
+  # The vector database.
+  qdrant:
+    # The same pinned version as docker/compose.yml.
+    image: qdrant/qdrant:v1.20.0
+    # Its collections live in a named volume, so they survive a restart.
+    volumes:
+      # Qdrant's storage directory.
+      - qdrant_data:/qdrant/storage
+    # Healthy when something accepts a connection on the REST port; the image has bash but no curl.
+    healthcheck:
+      # Opens a TCP connection to port 6333 inside the container.
+      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333'"]
+      # Try every 5 seconds.
+      interval: 5s
+      # Give up on one try after 3 seconds.
+      timeout: 3s
+      # Unhealthy after 20 failed tries.
+      retries: 20
+    # Restarted with Docker and after a crash; stays down only when stopped by hand.
+    restart: unless-stopped
+
+  # The model server.
+  ollama:
+    # Pinned to the version the project was developed with.
+    image: ollama/ollama:0.40.11
+    # The models live in a named volume, so they are downloaded once.
+    volumes:
+      # Ollama's model directory.
+      - ollama_models:/root/.ollama
+    # Settings for the server process.
+    environment:
+      # Keep a model in memory for 30 minutes between questions, so only the first one is slow.
+      OLLAMA_KEEP_ALIVE: 30m
+    # Healthy when the client can list models, which needs the server to answer.
+    healthcheck:
+      # The ollama client talks to the server in the same container.
+      test: ["CMD", "ollama", "list"]
+      # Try every 5 seconds.
+      interval: 5s
+      # Give up on one try after 5 seconds.
+      timeout: 5s
+      # Unhealthy after 20 failed tries.
+      retries: 20
+    # Restarted with Docker and after a crash; stays down only when stopped by hand.
+    restart: unless-stopped
+
+  # A job that downloads the two models into the volume of the ollama service, then exits.
+  models:
+    # The same image, because it carries the ollama client.
+    image: ollama/ollama:0.40.11
+    # Start only when the server answers.
+    depends_on:
+      # The ollama service, healthy.
+      ollama:
+        # Wait for its healthcheck to pass.
+        condition: service_healthy
+    # The client must talk to the server container, not to a server of its own.
+    environment:
+      # The address of the ollama service on the Compose network.
+      OLLAMA_HOST: ollama:11434
+    # Replace the image's entrypoint (the server) with a shell that pulls both models.
+    entrypoint: ["sh", "-c", "ollama pull qwen3:1.7b && ollama pull nomic-embed-text"]
+    # A job: it runs once and is not restarted. The models are the defaults of app/ai/config.ts.
+    restart: "no"
+
+  # A job that cuts the article into passages, embeds them and stores them in Qdrant, then exits.
+  ingest:
+    # The app image: it carries scripts/ingest.ts and data/rag-wikipedia.md.
+    image: ghcr.io/migueldiaz66/remix3-local-rag-agent:latest
+    # Built from the repository when the image is not published or --build is given.
+    build:
+      # The repository root, one folder up from this file.
+      context: ..
+      # The Dockerfile at that root.
+      dockerfile: Dockerfile
+    # Run the ingest script instead of the server.
+    command: ["node", "--import", "remix/node-tsx", "scripts/ingest.ts"]
+    # The addresses of the other services on the Compose network.
+    environment:
+      # The model server.
+      OLLAMA_URL: http://ollama:11434
+      # The vector database, on its container port.
+      QDRANT_URL: http://qdrant:6333
+    # Start only when the models are downloaded and Qdrant answers.
+    depends_on:
+      # The model puller must have exited with status 0.
+      models:
+        # Wait for it to finish successfully.
+        condition: service_completed_successfully
+      # Qdrant must be healthy.
+      qdrant:
+        # Wait for its healthcheck to pass.
+        condition: service_healthy
+    # A job: it runs once and is not restarted.
+    restart: "no"
+
+  # The app: the page, the chat endpoint, the three modes.
+  app:
+    # The same image as the ingest job.
+    image: ghcr.io/migueldiaz66/remix3-local-rag-agent:latest
+    # Built from the repository when the image is not published or --build is given.
+    build:
+      # The repository root, one folder up from this file.
+      context: ..
+      # The Dockerfile at that root.
+      dockerfile: Dockerfile
+    # The addresses of the other services on the Compose network.
+    environment:
+      # The model server.
+      OLLAMA_URL: http://ollama:11434
+      # The vector database, on its container port.
+      QDRANT_URL: http://qdrant:6333
+    # Start only after the article is stored, so no question meets an empty collection.
+    depends_on:
+      # The ingest job must have exited with status 0.
+      ingest:
+        # Wait for it to finish successfully.
+        condition: service_completed_successfully
+    # The ports published on the host.
+    ports:
+      # Only the local machine can reach it: the chat endpoint has no sign-in. Change the host port
+      # with APP_PORT. Quoted: YAML would read 44100:44100 as a base-60 number otherwise.
+      - "127.0.0.1:${APP_PORT:-44100}:44100"
+    # Restarted with Docker and after a crash; stays down only when stopped by hand.
+    restart: unless-stopped
+
+# The named volumes this file declares: the two stores that must survive a restart.
+volumes:
+  # Qdrant's collections.
+  qdrant_data:
+  # Ollama's downloaded models, 1.7 GB.
+  ollama_models:

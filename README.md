@@ -134,6 +134,32 @@ and opens the page.
 - The steps, the settings and what was not measured are in
   [.devcontainer/devcontainer.json_README.md](.devcontainer/devcontainer.json_README.md).
 
+## Run it with Docker
+
+If you have Docker, you need nothing else: no Node.js and no Ollama.
+
+```sh
+docker compose -f docker/compose.stack.yml up --build
+```
+
+Then open <http://localhost:44100> once the app logs `Server listening`. The command builds the app image from the
+[Dockerfile](Dockerfile), starts Qdrant and Ollama from their official images, downloads the two
+models once, stores the article, and only then starts the app. Only your own machine can reach it.
+
+- On the test laptop the first start took 18 minutes 33 seconds, most of it downloading the
+  official Ollama image, which Docker reports as 8.4 GB, and then the 1.7 GB of models. A start
+  with everything already downloaded took 39 seconds.
+- The first question after a start took 53 to 103 s, while the chat model loaded, and later ones
+  10 to 31 s, in a Docker VM with 4 CPU cores on a laptop that was busy with other work. No GPU is
+  configured, so answers run on the CPU. All the raw numbers are in
+  [docs/docker-run.md](docs/docker-run.md).
+- Stop it with `docker compose -f docker/compose.stack.yml down`. Add `-v` to also delete the
+  downloaded models and the vector store.
+- The app image is 471 MB and is not published to a registry yet. The order of the services and
+  the choice of registry are in
+  [docker/compose.stack.yml_README.md](docker/compose.stack.yml_README.md), and the image itself
+  in [Dockerfile_README.md](Dockerfile_README.md).
+
 ## Quick start
 
 You need [Node.js 24](https://nodejs.org/), [Docker](https://www.docker.com/products/docker-desktop/)
@@ -205,7 +231,8 @@ app/
   ai/             chunking, Ollama, Qdrant, retrieval, the agent, the chat dispatcher
   fixtures/       the RAG pipeline drawn on the canvas
 data/             the corpus and its license notice
-docker/           Qdrant
+docker/           Qdrant for development, and the whole stack as containers
+Dockerfile        the app image, with its .dockerignore
 .devcontainer/    the Codespaces setup: the machine config and the script that builds the stack
 docs/             the architecture document, its diagrams as images (diagrams/), notes on frameworks
                   that could replace parts, the transcripts and screenshots, the Codespaces run

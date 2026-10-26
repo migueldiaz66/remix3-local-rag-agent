@@ -1,0 +1,32 @@
+# .dockerignore: what stays out of the image build. Explained in dockerignore_README.md.
+
+# Dependencies are installed inside the image, for its own platform, never copied from the host.
+node_modules
+# The author's scratch folder, ignored by git as well.
+tmp
+# Version control data.
+.git
+# The documents and their images: not needed to run, and large.
+docs
+# The Codespaces setup.
+.devcontainer
+# The Dockerfile itself.
+Dockerfile
+# This file itself.
+.dockerignore
+# The compose files and their sidecars.
+docker
+# The island bundle built on the host: the image builds its own. Matches the .js, .js.map and .css.
+app/actions/public/flow/flow-bundle.*
+# The sidecar READMEs of the configuration files.
+*_README.md
+# The contributor guide.
+CONTRIBUTING.md
+# The agent guide.
+AGENTS.md
+# The rules for working in the repository with an agent.
+CLAUDE.md
+# The agent skills folder.
+.agents
+# The README is not needed to run.
+README.md

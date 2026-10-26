@@ -1,0 +1,21 @@
+Terminal control codes (112 escape sequences) of the "ollama pull" progress bar were removed
+from this file, and the repeated spinner frames were collapsed. Nothing else was changed.
+
+# models job
+models-1  | pulling manifest ...
+models-1  | removing unused layers 
+models-1  | success 
+models-1  | pulling manifest ...
+models-1  | removing unused layers 
+models-1  | success 
+
+# ingest job
+ingest-1  | 25 chunks in 6 chapters from /app/data/rag-wikipedia.md (longest 945 chars)
+ingest-1  | embedding with nomic-embed-text at http://ollama:11434
+ingest-1  | recreating collection "rag-article" at http://qdrant:6333 (768 dimensions)
+ingest-1  | 16/25 (30.3s)
+ingest-1  | 25/25 (38.8s)
+ingest-1  | done: 25 points in "rag-article" at http://qdrant:6333 in 38.9s
+
+# app
+app-1  | Server listening on http://localhost:44100

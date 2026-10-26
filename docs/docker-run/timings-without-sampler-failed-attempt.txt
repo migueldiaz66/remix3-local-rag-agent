@@ -1,0 +1,11 @@
+A second run of the questions of timings.txt, without the docker stats sampler.
+Started 2026-10-26T16:48:14Z. Host CPU load before the start, from typeperf (percent of all threads):
+54.748323 72.279839 40.098591 
+docker compose up -d returned after 31 s.
+ingest: done: 25 points in "rag-article" at http://qdrant:6333 in 16.4s
+rag-cold: first byte 0.000000s, whole stream 0.008480s, http 000
+rag-warm: first byte 0.000000s, whole stream 0.013450s, http 000
+rag-warm-again: first byte 0.000000s, whole stream 0.014848s, http 000
+llm: first byte 0.000000s, whole stream 0.026558s, http 000
+Host CPU load after the questions:
+55.159371 54.372456 83.053648 

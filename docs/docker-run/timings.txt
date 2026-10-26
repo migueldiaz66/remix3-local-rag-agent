@@ -1,0 +1,4 @@
+rag-cold: first byte 0.996623s, whole stream 102.873002s, http 200
+rag-warm: first byte 0.390420s, whole stream 22.243154s, http 200
+llm: first byte 5.780963s, whole stream 16.729297s, http 200
+agent-vector-store: first byte 0.010265s, whole stream 128.269453s, http 200

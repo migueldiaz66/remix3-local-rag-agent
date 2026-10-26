@@ -1,0 +1,22 @@
+# docker stats, after the questions
+NAME                        CPU %     MEM USAGE / LIMIT
+remix3-rag-stack-app-1      0.00%     119.5MiB / 15.57GiB
+remix3-rag-stack-qdrant-1   0.08%     26.66MiB / 15.57GiB
+remix3-rag-stack-ollama-1   0.01%     2.172GiB / 15.57GiB
+
+# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          18        5         22.42GB   14.46GB (64%)
+Containers      13        4         159.7kB   94.21kB (58%)
+Local Volumes   10        8         2.249GB   31.91MB (1%)
+Build Cache     98        0         6.309GB   3.065GB
+
+# volumes of the stack
+a2ba043867dd   ghcr.io/migueldiaz66/remix3-local-rag-agent:latest   "docker-entrypoint.s…"   0               4.1kB     5 minutes ago   Up 4 minutes (healthy)      remix3-rag-stack-app-1
+a2519c5d483e   ghcr.io/migueldiaz66/remix3-local-rag-agent:latest   "docker-entrypoint.s…"   0               4.1kB     5 minutes ago   Exited (0) 4 minutes ago    remix3-rag-stack-ingest-1
+33cd5bf408a8   ollama/ollama:0.40.11                                "sh -c 'ollama pull …"   0               4.1kB     5 minutes ago   Exited (0) 5 minutes ago    remix3-rag-stack-models-1
+a5d6440bdf0a   qdrant/qdrant:v1.20.0                                "./entrypoint.sh"        1               24.6kB    5 minutes ago   Up 5 minutes (healthy)      remix3-rag-stack-qdrant-1
+bfa0646bc5f5   ollama/ollama:0.40.11                                "/bin/ollama serve"      1               12.3kB    5 minutes ago   Up 5 minutes (healthy)      remix3-rag-stack-ollama-1
+VOLUME NAME                                                        LINKS     SIZE
+remix3-rag-stack_qdrant_data                                       1         205.6MB
+remix3-rag-stack_ollama_models                                     1         1.634GB

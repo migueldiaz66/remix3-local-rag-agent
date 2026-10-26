@@ -1,0 +1,16 @@
+docker compose up -d returned after 57 s (volumes kept, images present).
+
+# docker compose ps -a
+SERVICE   STATE     <no value>   STATUS
+app       running   starting     Up 1 second (health: starting)
+ingest    exited                 Exited (0) 1 second ago
+models    exited                 Exited (0) 42 seconds ago
+ollama    running   healthy      Up 52 seconds (healthy)
+qdrant    running   healthy      Up 52 seconds (healthy)
+
+# started and finished, UTC, and exit code of each container
+qdrant: started 16:41:29 finished 00:00:00 exit 0
+ollama: started 16:41:29 finished 00:00:00 exit 0
+models: started 16:41:36 finished 16:41:39 exit 0
+ingest: started 16:41:39 finished 16:42:20 exit 0
+app: started 16:42:20 finished 00:00:00 exit 0

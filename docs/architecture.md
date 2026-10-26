@@ -5360,6 +5360,23 @@ Not measured: the time a codespace takes to be created, the speed of a 4-core ma
 idle timeout and retention period of a codespace. The run, with the author's screenshots of the
 editor, the page and the answers, is written up in `docs/codespaces-run.md`.
 
+#### 13.2.8 Running everything in Docker
+
+`docker compose -f docker/compose.stack.yml up --build` starts the whole project as containers,
+with Docker as the only requirement (`README.md`, Run it with Docker; `Dockerfile_README.md`;
+`docker/compose.stack.yml_README.md`). The app image is built by `Dockerfile` in two stages: the
+first installs every dependency and builds the island bundle, the second keeps the runtime
+dependencies, the source and the bundle, and runs as the user `node`. It does not contain Ollama,
+Qdrant or the models. Compose starts those from their official images and orders the services so
+that the app starts only after the models are downloaded and the article is stored.
+
+Measured once on 26 October 2026 in a Docker VM of 4 cores: the app image is 471 MB, the official
+Ollama image 8.43 GB, the first start took 18 min 33 s on a slow connection, a start with
+everything downloaded 39 s, and a RAG question 53 s the first time and 10 s after that. Two later
+runs on a busier laptop gave 61 and 103 s, and 12 to 31 s: the raw numbers, the three sizes of the
+image and the CPU and memory of each container are in `docs/docker-run.md`. The image is not
+published to a registry. The sidecar compares `ghcr.io` with Docker Hub.
+
 ### 13.3 For implementers
 
 The numbers in this part come from `README.md`, `docs/transcripts/` and the measurements of 25
@@ -6566,6 +6583,14 @@ Root:
 | `docs/architecture.md` | This document | the reading guide, part 0 |
 | `docs/callers.md` | The generated index of exports and their callers | CONTRIBUTING.md, the code documentation rule |
 | `docs/notes-rag-and-frameworks.md` | What the project hand-writes, how production RAG differs, and which open-source frameworks could replace the parts | part 15, the future |
+| `Dockerfile` | The app image: two stages, runs as the user `node`, with a healthcheck | part 13, operating |
+| `Dockerfile_README.md` | Sidecar for `Dockerfile`, with what was measured | part 13, operating |
+| `.dockerignore` | What stays out of the image build | part 13, operating |
+| `dockerignore_README.md` | Sidecar for `.dockerignore` | part 13, operating |
+| `docker/compose.stack.yml` | The whole stack: Qdrant, Ollama, the model job, the ingest job and the app | part 13, operating |
+| `docker/compose.stack.yml_README.md` | Sidecar for `compose.stack.yml`: order, settings, measurements, where to publish | part 13, operating |
+| `docs/docker-run.md` | The Docker stack run: conditions, image sizes, starts, questions, CPU and memory | part 13, operating; README, Run it with Docker |
+| `docs/docker-run/` | The raw outputs of that run: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
 | `docs/codespaces-run.md` | The first run in a real codespace: how it is created, the screenshots, the results | part 13, operating; README, Try it in your browser |
 | `docs/images/codespaces/` | Five screenshots of that run: the editor, the page, two answers, the machine | `docs/codespaces-run.md` |
 | `docs/diagrams/` | 29 images of the diagrams (28 of this document, one of the README) and a gallery page, `README.md` | part 0.3, conventions |

@@ -39,6 +39,9 @@ const CONFIG = [
   'docker/compose.yml',
   '.devcontainer/devcontainer.json',
   '.devcontainer/codespace.sh',
+  'Dockerfile',
+  '.dockerignore',
+  'docker/compose.stack.yml',
 ]
 
 /**
@@ -52,6 +55,9 @@ const SIDECARS: Record<string, string> = {
   '.gitignore': 'gitignore_README.md',
   'docker/compose.yml': 'docker/compose.yml_README.md',
   '.devcontainer/devcontainer.json': '.devcontainer/devcontainer.json_README.md',
+  Dockerfile: 'Dockerfile_README.md',
+  '.dockerignore': 'dockerignore_README.md',
+  'docker/compose.stack.yml': 'docker/compose.stack.yml_README.md',
 }
 
 /**
