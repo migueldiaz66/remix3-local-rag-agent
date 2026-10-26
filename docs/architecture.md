@@ -84,15 +84,16 @@ tests, in nine files, that part 12 explains. `npm run typecheck` checks the type
 ### 0.5 Platform
 
 This project is meant to be platform-agnostic: it relies only on Node.js, Docker and Ollama,
-which run on Windows, macOS and Linux. But it has been tested only on Windows 11, on a 2-core
-CPU with no GPU. On macOS and Linux it should work, and nothing has been verified there:
-paths, Docker networking and Ollama's behavior may differ. If you try it on another system, an
-issue with what you found is welcome (README, the platform disclaimer).
+which run on Windows, macOS and Linux. But it has been tested on Windows 11, on a 2-core
+CPU with no GPU, and once more in an Ubuntu 24.04 dev container run from that machine (section
+13.2.7). Nothing has been verified on macOS, on a Linux machine of its own, or yet in Codespaces
+itself: paths, Docker networking and Ollama's behavior may differ. If you try it on another
+system, an issue with what you found is welcome (README, the platform disclaimer).
 
 What this means for the rest of the document: every measurement and every "checked in a browser"
-was made on Windows 11. Choices made for portability, such as `cross-env` in the npm scripts and
-a named Docker volume for Qdrant's data, are explained where they appear, and they are not
-evidence that another system works.
+was made on Windows 11, except the dev container run in section 13.2.7. Choices made for
+portability, such as `cross-env` in the npm scripts and a named Docker volume for Qdrant's data,
+are explained where they appear, and they are not evidence that another system works.
 
 ## 1. Purpose and scope
 
@@ -146,7 +147,7 @@ The constraints were chosen, not suffered (README, "Quick start", "Decisions in 
 | Vector database | Qdrant 1.20.0 in Docker, host port 6335, container `remix3-rag-qdrant` |
 | Web framework | Remix 3.1.0 on Node 24 (`.nvmrc` says 24.22.1; `package.json` needs 24.3 or later) |
 | Knowledge | One article: `data/rag-wikipedia.md`, a pinned Wikipedia revision under CC BY-SA 4.0 |
-| Platform | Tested only on Windows 11; meant to be platform-agnostic (section 0.5) |
+| Platform | Tested on Windows 11 and once in an Ubuntu 24.04 dev container; meant to be platform-agnostic (section 0.5) |
 
 What was measured, in short (README, "Measured results", 25 October 2026): with the models
 loaded, the plain LLM answer shows its first word after 0.6 s and finishes in 4.2 s. The RAG
@@ -5323,6 +5324,34 @@ another document:
 | Ollama | Depends on the platform and on how it was started; a terminal running `ollama serve` prints it. Not recorded in this repository | the log of Ollama's server | |
 | Qdrant | `docker compose -f docker/compose.yml logs -f` | the container's log | `docker/compose.yml_README.md` |
 
+#### 13.2.7 Running in a GitHub codespace
+
+The repository can also run in the browser, with nothing installed locally, through GitHub
+Codespaces (`README.md`, Try it in your browser; `.devcontainer/devcontainer.json_README.md`).
+`.devcontainer/devcontainer.json` asks for an Ubuntu 24.04 machine with Node 24 and a Docker
+daemon, at least 8 GB of memory and 32 GB of disk. `.devcontainer/codespace.sh create` runs once
+and installs Ollama, the npm packages, the Qdrant image and the two models. `codespace.sh start`
+runs on every start: Qdrant from `docker/compose.yml`, Ollama if nothing answers on port 11434,
+`npm run ingest`, then `npm run start`, with the logs in `/tmp/ollama.log` and `/tmp/app.log`.
+
+The copy belongs to the visitor, on their own account and their own free hours, so the project
+needs no shared server, no login and no rate limit of its own.
+
+Checked once on 26 October 2026 in a local dev container, built from a copy of the repository
+with the dev containers CLI on Docker Desktop for Windows (a Docker VM of 4 vCPUs and 15.6 GB).
+The build and both lifecycle commands succeeded. Ollama and the app kept running after the
+commands ended. The page answered with status 200, `npm run ingest` stored 25 passages, and a RAG
+question streamed, with its sources after 0.1 s. From nothing to a working page took about 22
+minutes on this connection: 8 minutes to build the image, 14 for `create`, of which 6 went to
+Ollama's download, and 24 seconds for `start`. The first question took 48 s while the model
+loaded and the second 8 s. After a restart of the container, `start` finished in 24 s and the
+app was listening about 45 s after it was launched.
+
+Not measured: the same steps in a real codespace, the speed of a Codespaces machine, whether the
+Codespaces port proxy delivers the chat stream line by line, and the idle timeout and retention
+period of a codespace. Until it has been opened in a real codespace, treat this path as checked
+in a local Linux dev container, not as proven in Codespaces.
+
 ### 13.3 For implementers
 
 The numbers in this part come from `README.md`, `docs/transcripts/` and the measurements of 25
@@ -6422,6 +6451,9 @@ Root:
 | File | Role | Explained in |
 |---|---|---|
 | `.gitattributes` | LF line endings on any system, and PNG files as binary | part 13, operating |
+| `.devcontainer/codespace.sh` | The script a codespace runs: `create` once, `start` on every start | part 13, operating |
+| `.devcontainer/devcontainer.json` | The Codespaces machine: base image, Node 24, Docker, ports, the two lifecycle commands | part 13, operating |
+| `.devcontainer/devcontainer.json_README.md` | Sidecar for `devcontainer.json` | part 13, operating |
 | `.gitignore` | Ignore rules, each commented; the built bundle is among them | part 13, operating |
 | `.nvmrc` | The Node version the app is developed with, 24.22.1 | part 5, infrastructure |
 | `AGENTS.md` | The agent guide: commands, layout, where the project's documents are | the reading guide, part 0 |

@@ -56,13 +56,15 @@ the result readable:
 - A test case's `it(...)` line gets a header that says what it proves and which function it
   covers; the lines inside follow the same rule as any code.
 - Import lines are covered by the file header's "Dependencies" section.
-- In `tsconfig.json`, `.gitignore`, `docker/compose.yml` and the CSS, every setting
-  or rule gets a comment above it or beside it.
+- In `tsconfig.json`, `.gitignore`, `docker/compose.yml`, `.devcontainer/devcontainer.json`,
+  `.devcontainer/codespace.sh` and the CSS, every setting, command or rule gets a comment above
+  it or beside it.
 - `package.json` and `.nvmrc` cannot carry comments; their sidecar READMEs document each key.
 
 **Configuration sidecars.** Every configuration file has a `<name>_README.md` beside it,
 with the leading dot dropped: `package.json_README.md`, `tsconfig.json_README.md`,
-`nvmrc_README.md`, `gitignore_README.md`, `docker/compose.yml_README.md`. Each
+`nvmrc_README.md`, `gitignore_README.md`, `docker/compose.yml_README.md`,
+`.devcontainer/devcontainer.json_README.md`. Each
 explains the file's purpose, every key or line, who reads the file, and what breaks if it is
 wrong.
 

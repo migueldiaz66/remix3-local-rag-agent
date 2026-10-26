@@ -1,5 +1,7 @@
 # remix3-local-rag-agent
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent)
+
 **The smallest complete RAG you can run on your own machine.** A proof of concept of the basic
 elements of retrieval-augmented generation (RAG), all of them local: no cloud service and no API
 key. A minimal web page draws the RAG pipeline as a diagram, next to a chat where you can ask the
@@ -22,10 +24,12 @@ RAG itself. [Which file it is and why it was chosen](#the-one-file-it-reads-and-
 below.
 
 > **Platform disclaimer.** This project is meant to be platform-agnostic: it relies only on
-> Node.js, Docker and Ollama, which run on Windows, macOS and Linux. But it has been **tested only
-> on Windows 11**, on a 2-core laptop CPU with no GPU. On macOS and Linux it should work, and
-> nothing has been verified there: paths, Docker networking and Ollama's behavior may differ. If
-> you try it on another system, an issue with what you found is welcome.
+> Node.js, Docker and Ollama, which run on Windows, macOS and Linux. But it has been **tested on
+> Windows 11**, on a 2-core laptop CPU with no GPU, and once more in an Ubuntu 24.04 dev container
+> run from that machine, which is the Codespaces setup below. Nothing has been verified on macOS,
+> on a Linux machine of its own, or yet in Codespaces itself: paths, Docker networking and
+> Ollama's behavior may differ. If you try it on another system, an issue with what you found is
+> welcome.
 
 ![RAG mode: the answer, and the four passages of the article it was built from](docs/images/02-rag-answer.png)
 
@@ -108,6 +112,27 @@ license, and the descriptions on the diagram mention this article, so they need 
 | **RAG** | Passages are retrieved first, and the model answers from them | A grounded answer, with the section and lines of every source |
 | **Agent** | The model also has tools: search for more passages, highlight a stage | An assistant that acts on the page it is part of |
 
+## Try it in your browser
+
+Click the badge at the top to run the whole project in GitHub Codespaces, with nothing installed
+on your machine. Codespaces builds a cloud machine from [.devcontainer/](.devcontainer/),
+installs Node, Docker, Ollama with both models and Qdrant, ingests the article, starts the app
+and opens the page.
+
+- It needs a GitHub account. The copy is private to you and runs on your own account, against
+  your own free hours: 120 core-hours a month on a free account, which is 60 hours on the default
+  2-core machine. Nothing runs on the author's side.
+- The first start installs everything and downloads 1.7 GB of models, so it takes minutes. In a
+  local test of these files, from nothing to a working page took about 22 minutes on a slow
+  connection. In Codespaces it was not measured. Later starts of the same codespace skip the
+  installs.
+- Answer speed depends on the machine you pick in the creation dialog, and a 4-core machine uses
+  your hours twice as fast. In the local test, on 4 cores, a question took 48 s the first time,
+  while the model loaded, and 8 s after that. Codespaces itself was not measured.
+- Delete the codespace when you finish: a stopped one still keeps its disk.
+- The steps, the settings and what was not measured are in
+  [.devcontainer/devcontainer.json_README.md](.devcontainer/devcontainer.json_README.md).
+
 ## Quick start
 
 You need [Node.js 24](https://nodejs.org/), [Docker](https://www.docker.com/products/docker-desktop/)
@@ -180,6 +205,7 @@ app/
   fixtures/       the RAG pipeline drawn on the canvas
 data/             the corpus and its license notice
 docker/           Qdrant
+.devcontainer/    the Codespaces setup: the machine config and the script that builds the stack
 docs/             the architecture document, its diagrams as images (diagrams/), notes on frameworks
                   that could replace parts, the transcripts and screenshots
 scripts/          ingest, build the island, the callers index, the comment checker

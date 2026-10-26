@@ -30,10 +30,16 @@ import { join, relative, sep } from 'node:path'
 const SOURCE_ROOTS = ['app', 'scripts', 'server.ts', 'hmr.ts']
 
 /**
- * The configuration files that can carry comments and get the plain check: every setting line
- * needs a comment above or beside it.
+ * The configuration files and shell scripts that can carry comments and get the plain check:
+ * every setting or command line needs a comment above or beside it.
  */
-const CONFIG = ['tsconfig.json', '.gitignore', 'docker/compose.yml']
+const CONFIG = [
+  'tsconfig.json',
+  '.gitignore',
+  'docker/compose.yml',
+  '.devcontainer/devcontainer.json',
+  '.devcontainer/codespace.sh',
+]
 
 /**
  * The configuration files and the sidecar README each one must have beside it, as
@@ -45,6 +51,7 @@ const SIDECARS: Record<string, string> = {
   '.nvmrc': 'nvmrc_README.md',
   '.gitignore': 'gitignore_README.md',
   'docker/compose.yml': 'docker/compose.yml_README.md',
+  '.devcontainer/devcontainer.json': '.devcontainer/devcontainer.json_README.md',
 }
 
 /**

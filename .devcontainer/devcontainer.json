@@ -1,0 +1,35 @@
+// devcontainer.json: the cloud machine GitHub Codespaces builds from this repository.
+// Opens with the "Open in GitHub Codespaces" badge of the README; runs the whole stack (Node,
+// Docker, Ollama and its models, Qdrant, the ingest, the app) with no manual step. Explained in
+// devcontainer.json_README.md beside this file.
+{
+  // The name shown in the list of codespaces.
+  "name": "remix3-local-rag-agent",
+  // The base image: Ubuntu 24.04 with git, curl, sudo and a non-root user named vscode.
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  // Tools added on top of the base image when it is built.
+  "features": {
+    // Node.js 24, the major version the app needs (24.3 or later, see "engines" in package.json).
+    "ghcr.io/devcontainers/features/node:1": { "version": "24" },
+    // A Docker daemon inside the container, so Qdrant runs from docker/compose.yml as on a laptop.
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  // The smallest machine accepted: the default 2-core one has 8 GB of memory and 32 GB of disk.
+  "hostRequirements": { "memory": "8gb", "storage": "32gb" },
+  // Runs once, when the codespace is created: install Ollama, the packages and the models.
+  "postCreateCommand": "bash .devcontainer/codespace.sh create",
+  // Runs on every start, the first included: start Qdrant and Ollama, ingest, start the app.
+  "postStartCommand": "bash .devcontainer/codespace.sh start",
+  // The port the app listens on (PORT, 44100 by default), forwarded to the browser.
+  "forwardPorts": [44100],
+  // How the forwarded ports are presented.
+  "portsAttributes": {
+    // Port 44100: a readable label, and the page opens by itself once the app answers.
+    "44100": { "label": "RAG chat and diagram", "onAutoForward": "openBrowser" }
+  },
+  // Settings for the editors that open the codespace.
+  "customizations": {
+    // Settings that only Codespaces reads: the README opens first, with the badge and the guide.
+    "codespaces": { "openFiles": ["README.md"] }
+  }
+}
