@@ -16,12 +16,29 @@ version is a one-line change in the compose file, not a rebuild.
 
 | Stage | Base | What it does | What survives |
 |---|---|---|---|
-| `build` | `node:24.22.1-bookworm-slim` | `npm ci` with every dependency, then `npm run build:flow`, which bundles React, React Flow and the canvas with esbuild | The source and the built bundle, copied out by the next stage |
-| `runtime` | the same image | `npm ci --omit=dev`, then the copies from `build` | The image |
+| `build` | `node:24.22.1-bookworm-slim`, always for the machine that builds | `npm ci` with every dependency, then `npm run build:flow`, which bundles React, React Flow and the canvas with esbuild | The source and the built bundle, copied out by the next stage |
+| `runtime` | the same image, for the platform being built | `npm ci --omit=dev`, then the copies from `build` | The image |
 
 The Node version is the one in `.nvmrc`, 24.22.1. The app needs 24.3 or later (`engines` in
 `package.json`). The `slim` variant is Debian 12 without compilers, which the app does not need,
 because its only native dependency, esbuild, ships as a prebuilt binary.
+
+## Platforms
+
+The image is built for `linux/amd64` and `linux/arm64`. The first `FROM` carries
+`--platform=$BUILDPLATFORM`, which makes the `build` stage run on the machine that builds, whatever
+the target. That is safe because the bundle it produces is JavaScript and CSS, identical on every
+platform. The consequence is that a build for arm64 on an amd64 machine runs esbuild natively and
+only the `runtime` stage, with `npm ci --omit=dev`, runs under emulation. `$BUILDPLATFORM` is
+filled in by BuildKit, the default builder of current Docker.
+
+A build for both platforms needs `docker buildx` with a builder that has the arm64 emulation:
+
+```sh
+docker run --privileged --rm tonistiigi/binfmt --install arm64
+docker buildx create --name multiarch --driver docker-container --bootstrap
+docker buildx build --builder multiarch --platform linux/amd64,linux/arm64 -t <name> --push .
+```
 
 ## The runtime stage, instruction by instruction
 

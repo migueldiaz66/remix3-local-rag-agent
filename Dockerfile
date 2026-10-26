@@ -4,7 +4,10 @@
 # from their official images. Explained in Dockerfile_README.md beside this file.
 
 # Stage 1, "build": a Node image with the exact version the project is developed with (.nvmrc).
-FROM node:24.22.1-bookworm-slim AS build
+# It always runs on the machine that builds (--platform=$BUILDPLATFORM): the bundle it makes is
+# JavaScript and CSS, the same for every target platform, so a build for arm64 runs esbuild natively
+# instead of under emulation. Only stage 2 is built for the target platform.
+FROM --platform=$BUILDPLATFORM node:24.22.1-bookworm-slim AS build
 # The folder everything happens in, inside the image.
 WORKDIR /app
 # Only the manifests first, so the install layer is reused until a dependency changes.
