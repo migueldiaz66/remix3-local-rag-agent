@@ -1,0 +1,6 @@
+Captured on 25 October 2026 from the app in production mode: qwen3:1.7b with thinking off, temperature 0, model warm, 25 passages.
+llm: first byte 0.615838s, total 4.168931s, http 200
+rag: first byte 0.441546s, total 16.260785s, http 200
+agent-chunking: first byte 0.016253s, total 46.280967s, http 200
+agent-vector-store: first byte 0.013174s, total 18.655434s, http 200
+error-bad-body: first byte 0.014194s, total 0.015625s, http 400

@@ -1,0 +1,38 @@
+// tsconfig.json: how TypeScript checks this app. Nothing is emitted: Node runs the .ts files
+// through remix/node-tsx, esbuild bundles the React island, and tsc only checks types.
+// TypeScript reads this file as JSON with comments. Each option: tsconfig.json_README.md.
+{
+  // The compiler options. The Remix 3 starter chose them; this project keeps them unchanged.
+  "compilerOptions": {
+    // All strict checks on: strictNullChecks, noImplicitAny, strictFunctionTypes and the rest.
+    "strict": true,
+    // The built-in declarations available: ES2024, the browser DOM and its iterable collections.
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    // The ambient types loaded for every file: Node's globals and Remix's HMR globals only.
+    "types": ["node", "remix/assets/types/hmr"],
+    // Module syntax is judged the way Node does: ESM here, because package.json says "module".
+    "module": "NodeNext",
+    // Imports are resolved the way Node does: package "exports", extensions written out.
+    "moduleResolution": "NodeNext",
+    // The newest JavaScript is accepted and nothing is downleveled; Node 24 runs it as written.
+    "target": "ESNext",
+    // Imports may name .ts and .tsx files, as this code does; allowed because nothing is emitted.
+    "allowImportingTsExtensions": true,
+    // Were anything emitted, a relative .ts import would become .js; harmless with noEmit.
+    "rewriteRelativeImportExtensions": true,
+    // Type-only imports must say "import type", so a file-by-file transpiler can drop them.
+    "verbatimModuleSyntax": true,
+    // Each file must be transpilable on its own, which is what remix/node-tsx and esbuild do.
+    "isolatedModules": true,
+    // The .d.ts files in node_modules are not checked: faster, and no third-party errors.
+    "skipLibCheck": true,
+    // JSX becomes calls to a jsx() runtime imported automatically, not React.createElement.
+    "jsx": "react-jsx",
+    // That runtime is Remix's; React files override it with a @jsxImportSource react pragma.
+    "jsxImportSource": "remix/component",
+    // No JavaScript is written: tsc only reports type errors (npm run typecheck).
+    "noEmit": true
+  },
+  // Left out of the program: a build output folder this project does not produce, from the starter.
+  "exclude": ["dist"]
+}

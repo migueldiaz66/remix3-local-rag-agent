@@ -1,0 +1,84 @@
+/* flow.css: the canvas's own styles, node kinds and the highlight the assistant asks for. */
+/*
+ * Objective
+ *   Give the React Flow nodes the look of the RAG pipeline: a color per node kind (start,
+ *   step, end, failure), a ring for the node the user selected, and a stronger orange ring for
+ *   the node the assistant highlights. Edge labels are lifted clear of their lines.
+ *
+ * Dependencies
+ *   None of its own. Each selector pairs a React Flow class (react-flow__node-default, selected,
+ *   react-flow__edge-text, react-flow__edge-textbg, set by @xyflow/react) with a class that
+ *   graph-to-flow.ts puts on nodes and edges (flow-node, flow-node--<kind>,
+ *   flow-node--highlighted, flow-edge). A rule applies only when both halves match.
+ *
+ * Consumers
+ *   app/actions/public/flow/mount.ts imports it; scripts/build-flow.ts (esbuild) copies it,
+ *   after React Flow's own stylesheet, into flow-bundle.css; app/assets.ts serves that file as
+ *   flowStyleHref and app/actions/page.tsx links it in the document head.
+ *
+ * How it relates to them
+ *   The class names are the contract: a rename in graph-to-flow.ts (NODE_CLASS,
+ *   HIGHLIGHTED_CLASS, kindClass) or in a React Flow upgrade turns a rule off without any error.
+ *   Pairing the classes also gives these rules precedence over React Flow's defaults, which come
+ *   first in the bundle.
+ */
+
+/* Every node, whatever its kind: a white card with a grey border, sized for the fixture's
+ * labels; the pointer cursor says it can be clicked. React Flow's default node is restyled, not
+ * replaced, so its handles and selection keep working; the transition softens the rings below. */
+.flow-node.react-flow__node-default {
+  width: 160px;
+  padding: 12px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #9aa3ab;
+  background: #ffffff;
+  color: #313539;
+  font: 16px/1.3 system-ui, sans-serif;
+  cursor: pointer;
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+/* The start node: green, the pipeline's entry. */
+.flow-node--start.react-flow__node-default {
+  border-color: #2e8b57;
+  background: #eef8f1;
+}
+
+/* The end node: blue and bold, the pipeline's good ending. */
+.flow-node--end.react-flow__node-default {
+  border-color: #1f6fb2;
+  background: #e9f2fb;
+  font-weight: 600;
+}
+
+/* A failure node: red and dashed, a place where the pipeline stops badly. */
+.flow-node--failure.react-flow__node-default {
+  border-color: #c0392b;
+  background: #fbeeec;
+  border-style: dashed;
+}
+
+/* The node the user clicked (React Flow adds .selected): a thin dark ring. */
+.flow-node.react-flow__node-default.selected {
+  box-shadow: 0 0 0 2px #313539;
+}
+
+/* The node the assistant points at (graph-to-flow.ts adds flow-node--highlighted): an orange
+ * border with a glowing ring, stronger than the selection so both can show at once. */
+.flow-node--highlighted.react-flow__node-default {
+  border-color: #e67e22;
+  box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.35), 0 6px 16px rgba(230, 126, 34, 0.3);
+}
+
+/* Edge labels are SVG text: small and grey, so the nodes keep the attention. */
+.react-flow__edge-text {
+  font-size: 11px;
+  fill: #6b7075;
+}
+
+/* Edge labels float above their line, clear of the nodes on short edges. */
+.flow-edge .react-flow__edge-text,
+/* The label's background box moves with the text; left alone it would stay on the line. */
+.flow-edge .react-flow__edge-textbg {
+  transform: translateY(-30px);
+}

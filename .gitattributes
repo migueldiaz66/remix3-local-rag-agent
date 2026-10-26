@@ -1,0 +1,4 @@
+# Line endings: LF everywhere, on any system.
+* text=auto eol=lf
+
+*.png binary

@@ -1,0 +1,37 @@
+# compose.yml: the Qdrant vector database of the Remix 3 local RAG agent, as a Docker container.
+# Its own container name and host port (6335), so it does not collide with a Qdrant you may
+# already run on Qdrant's usual 6333-6334. Data lives in a named Docker volume, so the file runs
+# unchanged on Windows, macOS and Linux. Explained in compose.yml_README.md beside this file.
+
+# The Compose project name, so this stack never shares containers with another stack that
+# lives in a folder also called docker (Compose would otherwise name the project after it).
+name: remix3-local-rag-agent
+
+# The containers this file manages: one.
+services:
+  # The service name, used in compose commands (docker compose up qdrant).
+  qdrant:
+    # Qdrant 1.20.0, pinned so an upgrade is a deliberate change, not a side effect of a pull.
+    image: qdrant/qdrant:v1.20.0
+    # A fixed container name, so docker ps and docker logs can name it and it never collides
+    # with another Qdrant container on the machine.
+    container_name: remix3-rag-qdrant
+    # The ports published on the host.
+    ports:
+      # Host 6335 to the container's REST port 6333, where the app and npm run ingest connect.
+      # The gRPC port 6334 is not published: nothing here uses it. Quoted: YAML would read
+      # 6335:6333 as a base-60 number otherwise.
+      - "6335:6333"
+    # The storage mounted into the container.
+    volumes:
+      # Qdrant's storage in the named volume declared below, so collections survive the container.
+      - qdrant_data:/qdrant/storage
+    # Restarted with Docker Desktop and after a crash; stays down only when stopped by hand.
+    restart: unless-stopped
+
+# The named volumes this file declares: one.
+volumes:
+  # Qdrant's collections. Docker creates it on the first up and keeps it across down; only
+  # docker compose down -v, or docker volume rm, deletes it. No driver options: the default
+  # local driver.
+  qdrant_data:

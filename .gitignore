@@ -1,0 +1,16 @@
+# .gitignore: what git never tracks in this repository. Explained in gitignore_README.md beside it.
+
+# Installed packages: npm i rebuilds them from package.json and package-lock.json.
+node_modules/
+# SQLite database files under db/, should any be created: local data, never source.
+db/*.sqlite
+# Scratch files of scripts and people; nothing in it is a source.
+tmp/
+# macOS Finder metadata, in case the folder is ever opened there.
+.DS_Store
+# The React Flow island's built script: npm run build:flow (scripts/build-flow.ts) makes it.
+app/actions/public/flow/flow-bundle.js
+# The bundle's source map, built with it.
+app/actions/public/flow/flow-bundle.js.map
+# The bundle's stylesheet, built with it.
+app/actions/public/flow/flow-bundle.css

@@ -1,0 +1,36 @@
+{
+  "name": "remix3-local-rag-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "npm run build:flow",
+    "dev": "cross-env NODE_ENV=development node --watch --import remix/node-tsx server.ts",
+    "prehmr": "npm run build:flow",
+    "hmr": "cross-env NODE_ENV=development node hmr.ts",
+    "prestart": "npm run build:flow",
+    "start": "cross-env NODE_ENV=production node --import remix/node-tsx server.ts",
+    "test": "cross-env NODE_ENV=test remix test",
+    "typecheck": "tsc --noEmit",
+    "build:flow": "node --import remix/node-tsx scripts/build-flow.ts",
+    "ingest": "node --import remix/node-tsx scripts/ingest.ts",
+    "callers": "node --import remix/node-tsx scripts/callers.ts",
+    "check:comments": "node --import remix/node-tsx scripts/check-comments.ts"
+  },
+  "engines": {
+    "node": ">=24.3.0"
+  },
+  "dependencies": {
+    "@xyflow/react": "12.12.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remix": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "cross-env": "10.1.0",
+    "esbuild": "0.27.7",
+    "typescript": "latest"
+  }
+}
