@@ -2,6 +2,11 @@
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent)
 
+> **Docker image.** `docker pull mdiazm01/remix3-local-rag-agent`, also on
+> `ghcr.io/migueldiaz66/remix3-local-rag-agent`. Windows PCs and Intel Macs get the `linux/amd64`
+> image, Apple Silicon Macs and Windows on Arm get `linux/arm64`, and Docker picks by itself. See
+> [Which image is mine?](#which-image-is-mine).
+
 **The smallest complete RAG you can run on your own machine.** A proof of concept of the basic
 elements of retrieval-augmented generation (RAG), all of them local: no cloud service and no API
 key. A minimal web page draws the RAG pipeline as a diagram, next to a chat where you can ask the
@@ -142,9 +147,29 @@ If you have Docker, you need nothing else: no Node.js and no Ollama.
 docker compose -f docker/compose.stack.yml up --build
 ```
 
-Then open <http://localhost:44100> once the app logs `Server listening`. The command builds the app image from the
-[Dockerfile](Dockerfile), starts Qdrant and Ollama from their official images, downloads the two
-models once, stores the article, and only then starts the app. Only your own machine can reach it.
+Then open <http://localhost:44100> once the app logs `Server listening`. The command builds the
+app image from the [Dockerfile](Dockerfile), starts Qdrant and Ollama from their official images,
+downloads the two models once, stores the article, and only then starts the app. Only your own
+machine can reach it.
+
+### Which image is mine?
+
+You do not have to choose: `docker pull` picks the right image for your computer.
+
+| Your computer | Docker Desktop runs | You get |
+|---|---|---|
+| Windows PC, Intel or AMD | Linux containers | `linux/amd64` |
+| Mac with an Intel chip | Linux containers | `linux/amd64` |
+| Mac with Apple Silicon (M1, M2, M3 and later) | Linux containers | `linux/arm64` |
+| Windows on Arm | Linux containers | `linux/arm64` |
+| Linux, x86-64 | Linux | `linux/amd64` |
+| Linux on Arm, Raspberry Pi | Linux | `linux/arm64` |
+
+Docker Hub and GitHub both show `linux` for every row, Windows and Mac included, because Docker
+Desktop runs containers in a Linux virtual machine. There is no Windows or macOS container image
+of this project, and the stack could not use one: Qdrant and Ollama, which it needs, publish
+Linux images only. To pick by hand, use an explicit tag: `0.1.1-amd64` or `0.1.1-arm64`, and
+`latest-amd64` or `latest-arm64`. The `arm64` image was only checked under emulation.
 
 - On the test laptop the first start took 18 minutes 33 seconds, most of it downloading the
   official Ollama image, which Docker reports as 8.4 GB, and then the 1.7 GB of models. A start

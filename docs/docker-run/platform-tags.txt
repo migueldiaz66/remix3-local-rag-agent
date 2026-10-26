@@ -1,0 +1,32 @@
+The explicit per-platform tags of version 0.1.1, created on 26 October 2026 without a rebuild, with
+docker buildx imagetools create from the digest of the platform image. Captured 2026-10-26T19:29:27Z, no login.
+A platform 'unknown/unknown' is the provenance attestation that travels with the image.
+
+== mdiazm01/remix3-local-rag-agent:0.1.1-amd64
+Digest:    sha256:6487b8534dd5fb008a6d3c0473321c82694acd0aae26011cf70c96777ddab86b
+Platform:    linux/amd64
+Platform:    unknown/unknown
+== mdiazm01/remix3-local-rag-agent:latest-amd64
+Digest:    sha256:6487b8534dd5fb008a6d3c0473321c82694acd0aae26011cf70c96777ddab86b
+Platform:    linux/amd64
+Platform:    unknown/unknown
+== mdiazm01/remix3-local-rag-agent:0.1.1-arm64
+Digest:    sha256:4edb5ff7626dfe76c8cc885e6e6fd0f7e9a7e762c5ec1051f8b0030d91f42c39
+Platform:    linux/arm64
+Platform:    unknown/unknown
+== mdiazm01/remix3-local-rag-agent:latest-arm64
+Digest:    sha256:4edb5ff7626dfe76c8cc885e6e6fd0f7e9a7e762c5ec1051f8b0030d91f42c39
+Platform:    linux/arm64
+Platform:    unknown/unknown
+== ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1-amd64
+Digest:    sha256:211ae696fb8bf95b8d2518fb33cd69e6aefae1730837bdf2a71d7fd45d33696d
+Platform:  linux/amd64
+== ghcr.io/migueldiaz66/remix3-local-rag-agent:latest-amd64
+Digest:    sha256:211ae696fb8bf95b8d2518fb33cd69e6aefae1730837bdf2a71d7fd45d33696d
+Platform:  linux/amd64
+== ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1-arm64
+Digest:    sha256:58f017ab367916bf2e03da26932f89f422102a2cfd869fea9ad0ba4e2e6d720b
+Platform:  linux/arm64
+== ghcr.io/migueldiaz66/remix3-local-rag-agent:latest-arm64
+Digest:    sha256:58f017ab367916bf2e03da26932f89f422102a2cfd869fea9ad0ba4e2e6d720b
+Platform:  linux/arm64

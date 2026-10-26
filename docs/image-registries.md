@@ -16,6 +16,8 @@ built by the [Dockerfile](../Dockerfile) and used by
 | Visibility | Public, checked through Docker Hub's API | Public and connected to the repository, checked through GitHub's API |
 | Tags `latest`, `0.1.1`, `b1eff4a` | `linux/amd64` and `linux/arm64` | `linux/amd64` and `linux/arm64` |
 | Tags `0.1.0`, `68c77ba` | `linux/amd64` only | `linux/amd64` only |
+| Tags `0.1.1-amd64`, `latest-amd64` | `linux/amd64` only | `linux/amd64` only |
+| Tags `0.1.1-arm64`, `latest-arm64` | `linux/arm64` only | `linux/arm64` only |
 | Page | <https://hub.docker.com/r/mdiazm01/remix3-local-rag-agent> | <https://github.com/users/migueldiaz66/packages/container/package/remix3-local-rag-agent> |
 
 The digests of the two versions:
@@ -36,7 +38,29 @@ own provenance attestations into its index. The images inside them are the same 
 The raw outputs are in [docker-run/arm64-build.txt](docker-run/arm64-build.txt). The version
 `0.1.0` was not touched when `0.1.1` was published, so its digest, in section 3, keeps its meaning.
 
+**The explicit tags.** `0.1.1-amd64`, `0.1.1-arm64`, `latest-amd64` and `latest-arm64` exist on
+both registries, so that a person can choose a platform by name. They were made without a
+rebuild, with `docker buildx imagetools create` from the digest of each platform image above, so
+each points at one platform and carries that platform's provenance attestation. Their own index
+digests, which differ from the ones above, are in
+[docker-run/platform-tags.txt](docker-run/platform-tags.txt). The names do not say `windows` or
+`mac` on purpose: the images are Linux ones, and such names would mislead.
+
 ## 2. Version 0.1.1: amd64 and arm64
+
+**Which image is mine?** Docker picks the platform of the computer. On both hubs the operating
+system shows as `linux`, for Windows and Mac as well, because Docker Desktop runs containers in a
+Linux virtual machine.
+
+| Your computer | You get |
+|---|---|
+| Windows PC, Intel or AMD; Mac with an Intel chip; Linux on x86-64 | `linux/amd64` |
+| Mac with Apple Silicon; Windows on Arm; Linux on Arm, Raspberry Pi | `linux/arm64` |
+
+There is no Windows or macOS container image: the official Qdrant and Ollama images, which the
+stack needs, are `linux/amd64` and `linux/arm64` only. The Docker Hub page carries this table, as
+its README, and a short description. Their source is
+[dockerhub-overview.md](dockerhub-overview.md), set through Docker Hub's API.
 
 **How to pull it.** Docker picks the platform of the machine:
 
@@ -131,8 +155,9 @@ that changes, and states no pull limit.
 
 ## 5. Who can push, and how it was done
 
-- **Docker Hub:** the account `mdiazm01`. The pushes used a personal access token with Read, Write
-  and Delete permissions that expires on 25 November 2026. The token is not in this repository.
+- **Docker Hub:** the account `mdiazm01`. The pushes, the explicit tags and the page text used a
+  personal access token with Read, Write and Delete permissions that expires on 25 November 2026.
+  The token is not in this repository.
   A screenshot of the page that shows it is kept in `.secrets/`, a folder that git and Docker
   both ignore (`gitignore_README.md`). Revoke the token in Docker Hub's account settings when it
   is no longer needed, then delete that file.

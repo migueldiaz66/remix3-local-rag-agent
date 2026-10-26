@@ -120,6 +120,7 @@ on both:
 | Discoverability | Found through the repository | Found through Docker Hub's search, where most people look for images |
 
 The tag policy in use: `latest` for the newest release, a version tag such as `0.1.1` for each
-release, and the commit hash for traceability. An older version is never overwritten: `0.1.0`
-stays the `linux/amd64` image it was. Since `0.1.1` the image is built for `linux/amd64` and
-`linux/arm64`, so it runs natively on Apple Silicon and other Arm machines.
+release, and the commit hash for traceability, and `0.1.1-amd64`, `0.1.1-arm64` and the two
+`latest-` tags for those who want to choose a platform by name. An older version is never
+overwritten: `0.1.0` stays the `linux/amd64` image it was. Since `0.1.1` the image is built for
+`linux/amd64` and `linux/arm64`, so it runs natively on Apple Silicon and other Arm machines.

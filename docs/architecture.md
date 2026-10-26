@@ -6594,7 +6594,8 @@ Root:
 | `docker/compose.stack.yml_README.md` | Sidecar for `compose.stack.yml`: order, settings, measurements, where to publish | part 13, operating |
 | `docs/image-registries.md` | Where the image is stored on Docker Hub and GitHub: addresses, tags, digests, sizes, limits, who can push, what is unfinished | part 13, operating; README, Run it with Docker |
 | `docs/docker-run.md` | The Docker stack run: conditions, image sizes, starts, questions, CPU and memory | part 13, operating; README, Run it with Docker |
-| `docs/docker-run/` | The raw outputs of that run, and of the arm64 build and emulated start: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
+| `docs/dockerhub-overview.md` | The text of the Docker Hub page: which image is mine, quick start, tags | `docs/image-registries.md` |
+| `docs/docker-run/` | The raw outputs of that run, of the arm64 build and emulated start, and of the platform tags: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
 | `docs/codespaces-run.md` | The first run in a real codespace: how it is created, the screenshots, the results | part 13, operating; README, Try it in your browser |
 | `docs/images/codespaces/` | Five screenshots of that run: the editor, the page, two answers, the machine | `docs/codespaces-run.md` |
 | `docs/diagrams/` | 29 images of the diagrams (28 of this document, one of the README) and a gallery page, `README.md` | part 0.3, conventions |
