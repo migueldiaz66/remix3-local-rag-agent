@@ -66,12 +66,20 @@ Desktop for Windows with a Docker VM of 4 vCPUs and 15.6 GB:
 - After restarting the container, `start` finished in 24 s and the app listened about 45 s after
   it was launched. The models and the Qdrant data were still there.
 
+Measured in a real codespace on 26 October 2026, on the default machine, 2 cores and 7.8 GiB of
+memory, with screenshots in [docs/codespaces-run.md](../docs/codespaces-run.md):
+
+- The page opened by itself through the forwarded port, over HTTPS, with the nine stages drawn.
+- The chat streamed word by word, so the Codespaces port proxy does not buffer the response.
+- A RAG question returned an answer and four sources. It took 26.2 s the first time, while the
+  chat model loaded, and 12.2 s the second time.
+- With both models loaded, 3.9 GiB of the 7.8 GiB were in use.
+
 Not measured:
 
-- **Any of this in a real codespace.** The download speeds, the machine and the disk differ.
-- **Answer speed** on Codespaces CPUs, and on the default 2-core machine in particular.
-- **Streaming through the Codespaces port proxy.** The chat reads one JSON event per line as it
-  arrives. If the proxy buffers the response, the answer would appear all at once.
+- **The time a codespace takes to be created.** It was not recorded; the local figure above is
+  from a slow home connection.
+- **Answer speed on a 4-core machine.** It should be faster and uses free hours twice as fast.
 - **The idle timeout and the retention period** of a codespace: the pages read for this file do not
   state them.
 

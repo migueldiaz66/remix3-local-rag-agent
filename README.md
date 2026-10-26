@@ -25,11 +25,10 @@ below.
 
 > **Platform disclaimer.** This project is meant to be platform-agnostic: it relies only on
 > Node.js, Docker and Ollama, which run on Windows, macOS and Linux. But it has been **tested on
-> Windows 11**, on a 2-core laptop CPU with no GPU, and once more in an Ubuntu 24.04 dev container
-> run from that machine, which is the Codespaces setup below. Nothing has been verified on macOS,
-> on a Linux machine of its own, or yet in Codespaces itself: paths, Docker networking and
-> Ollama's behavior may differ. If you try it on another system, an issue with what you found is
-> welcome.
+> Windows 11**, on a 2-core laptop CPU with no GPU, and once in a GitHub codespace on Ubuntu 24.04,
+> which is the setup below. Nothing has been verified on macOS or on a Linux machine of its own:
+> paths, Docker networking and Ollama's behavior may differ. If you try it on another system, an
+> issue with what you found is welcome.
 
 ![RAG mode: the answer, and the four passages of the article it was built from](docs/images/02-rag-answer.png)
 
@@ -122,14 +121,16 @@ and opens the page.
 - It needs a GitHub account. The copy is private to you and runs on your own account, against
   your own free hours: 120 core-hours a month on a free account, which is 60 hours on the default
   2-core machine. Nothing runs on the author's side.
-- The first start installs everything and downloads 1.7 GB of models, so it takes minutes. In a
-  local test of these files, from nothing to a working page took about 22 minutes on a slow
-  connection. In Codespaces it was not measured. Later starts of the same codespace skip the
-  installs.
-- Answer speed depends on the machine you pick in the creation dialog, and a 4-core machine uses
-  your hours twice as fast. In the local test, on 4 cores, a question took 48 s the first time,
-  while the model loaded, and 8 s after that. Codespaces itself was not measured.
+- The first start installs everything and downloads 1.7 GB of models, so it takes minutes. How long
+  it took in Codespaces was not recorded; a local test of the same files, on a slow home
+  connection, took about 22 minutes. Later starts of the same codespace skip the installs.
+- On the default machine, 2 cores and 7.8 GiB of memory, the page opened by itself and the chat
+  streamed word by word. A question took 26.2 s the first time, while the chat model loaded, and
+  12.2 s the second time, with about 3.9 GiB of memory in use. A 4-core machine should be faster
+  and uses your hours twice as fast; that was not measured.
 - Delete the codespace when you finish: a stopped one still keeps its disk.
+- The first real run, with screenshots of the editor, the page and the answers, is in
+  [docs/codespaces-run.md](docs/codespaces-run.md).
 - The steps, the settings and what was not measured are in
   [.devcontainer/devcontainer.json_README.md](.devcontainer/devcontainer.json_README.md).
 
@@ -207,7 +208,7 @@ data/             the corpus and its license notice
 docker/           Qdrant
 .devcontainer/    the Codespaces setup: the machine config and the script that builds the stack
 docs/             the architecture document, its diagrams as images (diagrams/), notes on frameworks
-                  that could replace parts, the transcripts and screenshots
+                  that could replace parts, the transcripts and screenshots, the Codespaces run
 scripts/          ingest, build the island, the callers index, the comment checker
 ```
 

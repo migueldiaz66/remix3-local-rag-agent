@@ -85,15 +85,16 @@ tests, in nine files, that part 12 explains. `npm run typecheck` checks the type
 
 This project is meant to be platform-agnostic: it relies only on Node.js, Docker and Ollama,
 which run on Windows, macOS and Linux. But it has been tested on Windows 11, on a 2-core
-CPU with no GPU, and once more in an Ubuntu 24.04 dev container run from that machine (section
-13.2.7). Nothing has been verified on macOS, on a Linux machine of its own, or yet in Codespaces
-itself: paths, Docker networking and Ollama's behavior may differ. If you try it on another
-system, an issue with what you found is welcome (README, the platform disclaimer).
+CPU with no GPU, and once in a GitHub codespace on Ubuntu 24.04 (section 13.2.7). Nothing has
+been verified on macOS or on a Linux machine of its own: paths, Docker networking and Ollama's
+behavior may differ. If you try it on another system, an issue with what you found is welcome
+(README, the platform disclaimer).
 
 What this means for the rest of the document: every measurement and every "checked in a browser"
-was made on Windows 11, except the dev container run in section 13.2.7. Choices made for
-portability, such as `cross-env` in the npm scripts and a named Docker volume for Qdrant's data,
-are explained where they appear, and they are not evidence that another system works.
+was made on Windows 11, except the dev container and codespace runs in section 13.2.7.
+Choices made for portability, such as `cross-env` in the npm scripts and a named Docker volume
+for Qdrant's data, are explained where they appear, and they are not evidence that another
+system works.
 
 ## 1. Purpose and scope
 
@@ -147,7 +148,7 @@ The constraints were chosen, not suffered (README, "Quick start", "Decisions in 
 | Vector database | Qdrant 1.20.0 in Docker, host port 6335, container `remix3-rag-qdrant` |
 | Web framework | Remix 3.1.0 on Node 24 (`.nvmrc` says 24.22.1; `package.json` needs 24.3 or later) |
 | Knowledge | One article: `data/rag-wikipedia.md`, a pinned Wikipedia revision under CC BY-SA 4.0 |
-| Platform | Tested on Windows 11 and once in an Ubuntu 24.04 dev container; meant to be platform-agnostic (section 0.5) |
+| Platform | Tested on Windows 11 and once in a GitHub codespace on Ubuntu 24.04; meant to be platform-agnostic (section 0.5) |
 
 What was measured, in short (README, "Measured results", 25 October 2026): with the models
 loaded, the plain LLM answer shows its first word after 0.6 s and finishes in 4.2 s. The RAG
@@ -5347,10 +5348,17 @@ Ollama's download, and 24 seconds for `start`. The first question took 48 s whil
 loaded and the second 8 s. After a restart of the container, `start` finished in 24 s and the
 app was listening about 45 s after it was launched.
 
-Not measured: the same steps in a real codespace, the speed of a Codespaces machine, whether the
-Codespaces port proxy delivers the chat stream line by line, and the idle timeout and retention
-period of a codespace. Until it has been opened in a real codespace, treat this path as checked
-in a local Linux dev container, not as proven in Codespaces.
+Then checked once in a real codespace on 26 October 2026, on the default machine: 2 cores and
+7.8 GiB of memory. The page opened by itself through the forwarded port, over HTTPS, with the
+nine stages drawn and the chat panel beside them. A RAG question about chunking streamed word by
+word, so the Codespaces port proxy does not buffer the response, and it came back with four
+sources. It took 26.2 s the first time, while the chat model loaded, and 12.2 s the second
+time. With both models loaded, 3.9 GiB of the 7.8 GiB were in use, so the default machine is
+enough.
+
+Not measured: the time a codespace takes to be created, the speed of a 4-core machine, and the
+idle timeout and retention period of a codespace. The run, with the author's screenshots of the
+editor, the page and the answers, is written up in `docs/codespaces-run.md`.
 
 ### 13.3 For implementers
 
@@ -6558,6 +6566,8 @@ Root:
 | `docs/architecture.md` | This document | the reading guide, part 0 |
 | `docs/callers.md` | The generated index of exports and their callers | CONTRIBUTING.md, the code documentation rule |
 | `docs/notes-rag-and-frameworks.md` | What the project hand-writes, how production RAG differs, and which open-source frameworks could replace the parts | part 15, the future |
+| `docs/codespaces-run.md` | The first run in a real codespace: how it is created, the screenshots, the results | part 13, operating; README, Try it in your browser |
+| `docs/images/codespaces/` | Five screenshots of that run: the editor, the page, two answers, the machine | `docs/codespaces-run.md` |
 | `docs/diagrams/` | 29 images of the diagrams (28 of this document, one of the README) and a gallery page, `README.md` | part 0.3, conventions |
 | `docs/images/01-canvas.png` | Screenshot: the canvas | README, screenshots |
 | `docs/images/02-rag-answer.png` | Screenshot: a RAG answer and its four passages | README, screenshots |
