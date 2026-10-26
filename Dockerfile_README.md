@@ -84,13 +84,20 @@ On 26 October 2026, with Docker Desktop for Windows on the author's laptop:
   with status 200, served the island's stylesheet and the Remix runtime files, ran as user
   `node` (id 1000) and became healthy about 30 seconds after the start.
 
-Not done: a build for `linux/arm64`. The base image has an arm64 variant and esbuild ships an
-arm64 binary, so it should work, and nothing was run on arm64.
+For `linux/arm64`, built under QEMU emulation on the same laptop: the push of both platforms to
+Docker Hub took 196 s, the second push to ghcr.io 30 s from the cache. Started alone under
+emulation, the arm64 image reported `aarch64`, answered the home page with status 200 after 42 s
+and served the island's assets, which shows that esbuild works there. Its healthcheck reported
+`unhealthy` after 144 s, because starting Node under emulation takes longer than the check's 5
+second timeout. It was never run on Arm hardware. The raw outputs are
+[docs/docker-run/arm64-build.txt](docs/docker-run/arm64-build.txt) and
+[docs/docker-run/arm64-smoke-test.txt](docs/docker-run/arm64-smoke-test.txt).
 
 ## Publishing
 
 The image is published on Docker Hub as `mdiazm01/remix3-local-rag-agent`, with the tags `latest`,
-`0.1.0` and `68c77ba`, built with the labels `revision`, `version` and `created` added. The same
+`0.1.1` and `b1eff4a` for `linux/amd64` and `linux/arm64`, and `0.1.0` and `68c77ba` for
+`linux/amd64` only, built with the labels `revision`, `version` and `created` added. The same
 image is on GitHub's container registry, `ghcr.io/migueldiaz66/remix3-local-rag-agent`, public, and
 connected to this repository. The details are in
 [docs/image-registries.md](docs/image-registries.md), and the compose file names the Docker Hub

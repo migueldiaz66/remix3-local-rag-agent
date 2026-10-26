@@ -156,8 +156,9 @@ models once, stores the article, and only then starts the app. Only your own mac
 - Stop it with `docker compose -f docker/compose.stack.yml down`. Add `-v` to also delete the
   downloaded models and the vector store.
 - The app image is 471 MB on disk, 120 MB to download, and is published on Docker Hub:
-  `docker pull mdiazm01/remix3-local-rag-agent:0.1.0`. The compose file pulls it by itself, and
-  builds it from the repository only with `--build`. It is for `linux/amd64`. The same image is on
+  `docker pull mdiazm01/remix3-local-rag-agent:0.1.1`. The compose file pulls it by itself, and
+  builds it from the repository only with `--build`. It is built for `linux/amd64` and
+  `linux/arm64`, the second only checked under emulation. The same image is on
   GitHub's container registry, `ghcr.io/migueldiaz66/remix3-local-rag-agent`, and it is public.
   Where each copy is stored is in
   [docs/image-registries.md](docs/image-registries.md). The order of the services is in

@@ -57,7 +57,7 @@ are already in the volume and the ingest replaces the collection in seconds.
   no curl, so its check opens a TCP connection. Ollama's check runs `ollama list`, which needs the
   server to answer.
 - **`image` and `build` together.** `up --build` builds the image from the repository and tags it
-  `mdiazm01/remix3-local-rag-agent:0.1.0`. Without `--build`, Compose uses the image if it exists
+  `mdiazm01/remix3-local-rag-agent:0.1.1`. Without `--build`, Compose uses the image if it exists
   locally and otherwise pulls it from Docker Hub, 120 MB compressed. The tag is pinned like the
   Qdrant and Ollama ones: a new version of the app image means a new tag here.
 - **The models.** The compose file names them in the `models` job, and `app/ai/config.ts` names
@@ -103,9 +103,10 @@ leave out the `ollama` and `models` services.
 
 ## Where the image is published
 
-It is published on Docker Hub, as `mdiazm01/remix3-local-rag-agent` with the tags `latest`, `0.1.0`
-and `68c77ba`, and on GitHub's registry as `ghcr.io/migueldiaz66/remix3-local-rag-agent` with the
-same tags and the same digest. The GitHub copy is public and connected to this repository, so
+It is published on Docker Hub, as `mdiazm01/remix3-local-rag-agent` with the tags `latest`, `0.1.1`
+and `b1eff4a` for `linux/amd64` and `linux/arm64`, and `0.1.0` and `68c77ba` for `linux/amd64`
+only, and on GitHub's registry as `ghcr.io/migueldiaz66/remix3-local-rag-agent` with the same
+tags and the same images. The GitHub copy is public and connected to this repository, so
 the repository's Packages box lists it. What is stored, the digests and how it was pushed are in
 [docs/image-registries.md](../docs/image-registries.md). The comparison that led to publishing
 on both:
@@ -118,6 +119,7 @@ on both:
 | Publishing from CI | `GITHUB_TOKEN` in a GitHub Action, no extra secret | A Docker Hub account and an access token stored as a repository secret |
 | Discoverability | Found through the repository | Found through Docker Hub's search, where most people look for images |
 
-The tag policy in use: `latest` for the newest release, a version tag such as `0.1.0` for each
-release, and the commit hash for traceability. Only `linux/amd64` is built; a multi-architecture
-build would let it run on Apple Silicon without emulation.
+The tag policy in use: `latest` for the newest release, a version tag such as `0.1.1` for each
+release, and the commit hash for traceability. An older version is never overwritten: `0.1.0`
+stays the `linux/amd64` image it was. Since `0.1.1` the image is built for `linux/amd64` and
+`linux/arm64`, so it runs natively on Apple Silicon and other Arm machines.

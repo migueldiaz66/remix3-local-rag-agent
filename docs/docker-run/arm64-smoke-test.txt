@@ -1,0 +1,65 @@
+The linux/arm64 image of version 0.1.1, started alone under QEMU emulation on an amd64 laptop.
+Captured 2026-10-26T19:09:29Z, Docker Desktop for Windows, anonymous pulls (empty Docker config).
+This is NOT a run on Arm hardware: emulation is slow, so the times below are not representative.
+
+# Pull from Docker Hub, platform linux/arm64
+Digest: sha256:384279c575bd0bd1e0204c5c20a2bca3fb93c927b1d824c5134ab69c8345c529
+Status: Downloaded newer image for mdiazm01/remix3-local-rag-agent:0.1.1
+docker.io/mdiazm01/remix3-local-rag-agent:0.1.1
+
+# Pull from ghcr.io, platform linux/arm64
+Digest: sha256:9dee6b41e093baea5f0defdf04003b4e770146178c82ee2dde53adafc39294b3
+Status: Downloaded newer image for ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1
+ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1
+
+# The ghcr.io copy runs under arm64 too
+aarch64
+arm64 v24.22.1
+
+# Start the Docker Hub image alone, published on 127.0.0.1:44103
+the home page first answered 200 after 42 s
+server log: Server listening on http://localhost:44100
+
+# Inside the container
+uname -m: aarch64
+node: arm64 v24.22.1
+user: uid=1000(node) gid=1000(node) groups=1000(node)
+
+# Assets, which Remix builds with esbuild at run time (the arm64 esbuild binary)
+HTTP 200 16383 bytes in 0.215496s  /assets/app/actions/public/flow/flow-bundle.css
+HTTP 200 2287 bytes in 0.241517s  /assets/npm/%40remix-run/component/dist/runtime/run.js
+HTTP 200 908 bytes in 0.202273s  /favicon.svg
+
+# Health, polled every 5 s for up to 150 s after the start
+t+48 s: starting
+t+53 s: starting
+t+59 s: starting
+t+64 s: starting
+t+70 s: starting
+t+75 s: starting
+t+81 s: starting
+t+87 s: starting
+t+93 s: starting
+t+98 s: starting
+t+105 s: starting
+t+111 s: starting
+t+116 s: starting
+t+122 s: starting
+t+127 s: starting
+t+133 s: starting
+t+138 s: starting
+t+144 s: unhealthy
+t+150 s: unhealthy
+t+155 s: unhealthy
+t+161 s: unhealthy
+t+166 s: unhealthy
+t+172 s: unhealthy
+t+178 s: unhealthy
+t+183 s: unhealthy
+t+189 s: unhealthy
+t+194 s: unhealthy
+t+200 s: unhealthy
+t+205 s: unhealthy
+t+211 s: unhealthy
+
+test container removed

@@ -1,0 +1,156 @@
+The multi-architecture image (linux/amd64 and linux/arm64), version 0.1.1, captured 2026-10-26T19:08:40Z.
+Built with docker buildx on Docker Desktop for Windows, the arm64 half under QEMU emulation, and
+pushed with the script docker-multiarch-push.sh (outside the repository).
+
+# Durations, from the push script
+revision b1eff4aa226a6070ec4f3ca732fe1564c0dc35cb, tags 0.1.1 latest b1eff4a, created 2026-10-26T19:04:28Z
+hub: exit 0 after 196 s
+ghcr: exit 0 after 30 s
+
+# The builder
+
+# docker buildx imagetools inspect mdiazm01/remix3-local-rag-agent:0.1.1 (no login)
+Name:      docker.io/mdiazm01/remix3-local-rag-agent:0.1.1
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:384279c575bd0bd1e0204c5c20a2bca3fb93c927b1d824c5134ab69c8345c529
+           
+Manifests: 
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:0.1.1@sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:0.1.1@sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:0.1.1@sha256:4f672b88b25e1f891643f826cd47a8e2b5ea751900ffe384627bf78443f07ca0
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.type:   attestation-manifest
+    vnd.docker.reference.digest: sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:0.1.1@sha256:5a535a346f3058630eac3781cc2e2aa9bed9b96e630d66577972461309ad5026
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+    vnd.docker.reference.type:   attestation-manifest
+
+# docker buildx imagetools inspect mdiazm01/remix3-local-rag-agent:latest (no login)
+Name:      docker.io/mdiazm01/remix3-local-rag-agent:latest
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:384279c575bd0bd1e0204c5c20a2bca3fb93c927b1d824c5134ab69c8345c529
+           
+Manifests: 
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:latest@sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:latest@sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:latest@sha256:4f672b88b25e1f891643f826cd47a8e2b5ea751900ffe384627bf78443f07ca0
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        docker.io/mdiazm01/remix3-local-rag-agent:latest@sha256:5a535a346f3058630eac3781cc2e2aa9bed9b96e630d66577972461309ad5026
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+    vnd.docker.reference.type:   attestation-manifest
+
+# docker buildx imagetools inspect ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1 (no login)
+Name:      ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:9dee6b41e093baea5f0defdf04003b4e770146178c82ee2dde53adafc39294b3
+           
+Manifests: 
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1@sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1@sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1@sha256:c118490f7baa0aa736e99f193843a0268d89b92ed2618a311333ffef922af8db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.1@sha256:91c242ab3a0bfc8de84aacc0066037122ac8a7a4741ce8088d1ce4532ea0c270
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+    vnd.docker.reference.type:   attestation-manifest
+
+# docker buildx imagetools inspect ghcr.io/migueldiaz66/remix3-local-rag-agent:latest (no login)
+Name:      ghcr.io/migueldiaz66/remix3-local-rag-agent:latest
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:9dee6b41e093baea5f0defdf04003b4e770146178c82ee2dde53adafc39294b3
+           
+Manifests: 
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:latest@sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:latest@sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:latest@sha256:c118490f7baa0aa736e99f193843a0268d89b92ed2618a311333ffef922af8db
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:122cc00ae17bc1840669264c9d9a5a56169ee58afb36d2871723c9b43b19a2db
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        ghcr.io/migueldiaz66/remix3-local-rag-agent:latest@sha256:91c242ab3a0bfc8de84aacc0066037122ac8a7a4741ce8088d1ce4532ea0c270
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:f83a5329b6e5992271e46e9a14d10c0b8b16e7495be33a13ebe17f4f6843b085
+    vnd.docker.reference.type:   attestation-manifest
+
+# Docker Hub API, tags of the repository: size and platforms of each
+latest index sha256:384279c575bd full_size 119843736 updated 2026-10-26T19:07:40.223356Z
+     linux amd64 size 119843736 digest sha256:122cc00ae17b
+     linux arm64 size 117745660 digest sha256:f83a5329b6e5
+b1eff4a index sha256:384279c575bd full_size 119843736 updated 2026-10-26T19:07:43.342698Z
+     linux amd64 size 119843736 digest sha256:122cc00ae17b
+     linux arm64 size 117745660 digest sha256:f83a5329b6e5
+0.1.1 index sha256:384279c575bd full_size 119843736 updated 2026-10-26T19:07:37.170001Z
+     linux amd64 size 119843736 digest sha256:122cc00ae17b
+     linux arm64 size 117745660 digest sha256:f83a5329b6e5
+68c77ba index sha256:5bf7f013142c full_size 119843469 updated 2026-10-26T17:14:02.017451Z
+     linux amd64 size 119843469 digest sha256:5dfcc673c1a9
+     unknown unknown size 2105 digest sha256:99174461bc68
+0.1.0 index sha256:5bf7f013142c full_size 119843469 updated 2026-10-26T17:13:59.209978Z
+     linux amd64 size 119843469 digest sha256:5dfcc673c1a9
+     unknown unknown size 2105 digest sha256:99174461bc68
+
+# GitHub package, versions (read with a token; the package is public)
+sha256:9dee6b41e093 ['b1eff4a', '0.1.1', 'latest'] 2026-10-26T19:08:07Z
+sha256:91c242ab3a0b [] 2026-10-26T19:08:07Z
+sha256:122cc00ae17b [] 2026-10-26T19:08:06Z
+sha256:f83a5329b6e5 [] 2026-10-26T19:08:05Z
+sha256:c118490f7baa [] 2026-10-26T19:08:05Z
+sha256:5bf7f013142c ['68c77ba', '0.1.0'] 2026-10-26T17:37:33Z
+sha256:5dfcc673c1a9 [] 2026-10-26T17:37:32Z
+sha256:99174461bc68 [] 2026-10-26T17:36:46Z
+package visibility: public | connected repository: migueldiaz66/remix3-local-rag-agent | versions: 8
+
+# The builder (appended afterwards: the first attempt printed nothing, because the throwaway Docker config has no builder)
+Name:          multiarch
+Driver:        docker-container
+Name:                  multiarch0
+Platforms:             linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/arm64, linux/386

@@ -5377,7 +5377,8 @@ runs on a busier laptop gave 61 and 103 s, and 12 to 31 s: the raw numbers, the 
 image and the CPU and memory of each container are in `docs/docker-run.md`. The image is
 published on Docker Hub, `mdiazm01/remix3-local-rag-agent`, and on GitHub's container registry,
 `ghcr.io/migueldiaz66/remix3-local-rag-agent`, where it is public and connected to the
-repository; `docs/image-registries.md` says what is stored where.
+repository; `docs/image-registries.md` says what is stored where. Since version 0.1.1 it is built
+for `linux/amd64` and `linux/arm64`, the second under emulation and never run on Arm hardware.
 
 ### 13.3 For implementers
 
@@ -6593,7 +6594,7 @@ Root:
 | `docker/compose.stack.yml_README.md` | Sidecar for `compose.stack.yml`: order, settings, measurements, where to publish | part 13, operating |
 | `docs/image-registries.md` | Where the image is stored on Docker Hub and GitHub: addresses, tags, digests, sizes, limits, who can push, what is unfinished | part 13, operating; README, Run it with Docker |
 | `docs/docker-run.md` | The Docker stack run: conditions, image sizes, starts, questions, CPU and memory | part 13, operating; README, Run it with Docker |
-| `docs/docker-run/` | The raw outputs of that run: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
+| `docs/docker-run/` | The raw outputs of that run, and of the arm64 build and emulated start: image facts, start logs, three streams, timings, CPU and memory samples | `docs/docker-run.md` |
 | `docs/codespaces-run.md` | The first run in a real codespace: how it is created, the screenshots, the results | part 13, operating; README, Try it in your browser |
 | `docs/images/codespaces/` | Five screenshots of that run: the editor, the page, two answers, the machine | `docs/codespaces-run.md` |
 | `docs/diagrams/` | 29 images of the diagrams (28 of this document, one of the README) and a gallery page, `README.md` | part 0.3, conventions |

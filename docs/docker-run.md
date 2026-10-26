@@ -55,10 +55,11 @@ Which of the three is the "real" size depends on the question. The last one is t
 size: Docker Hub reports 119,843,469 bytes for the same image once it was pushed
 ([image-registries.md](image-registries.md)).
 
-The image has 14 layers and is built for `linux/amd64`. The big ones are the Node binary (157 MB),
-the production dependencies (101 MB) and the Debian base (85 MB). The app itself, source, bundle
-and data, is under 1 MB. It runs as the user `node`, listens on 44100, and its healthcheck calls
-the home page every 30 seconds with a 5 second timeout, a 30 second grace period and 3 retries.
+The image measured here is version 0.1.0, with 14 layers, built for `linux/amd64`. The big ones
+are the Node binary (157 MB), the production dependencies (101 MB) and the Debian base (85 MB).
+The app itself, source, bundle and data, is under 1 MB. It runs as the user `node`, listens on
+44100, and its healthcheck calls the home page every 30 seconds with a 5 second timeout, a 30
+second grace period and 3 retries.
 
 The other images are Qdrant 281 MB and Ollama 8.43 GB. The two volumes are 1.634 GB for the
 models and 205.6 MB for Qdrant. 205.6 MB is far more than 25 vectors need; it was not
@@ -139,7 +140,8 @@ investigated.
 
 ## 8. What was not measured
 
-- A build or run for `linux/arm64`.
+- A run on real Arm hardware. The `linux/arm64` image of version 0.1.1 was built and started
+  under emulation only, see [image-registries.md](image-registries.md).
 - A GPU.
 - Pulling the image from a registry, because it is not published.
 - The same questions with Ollama running natively on the same host under the same load, so the
