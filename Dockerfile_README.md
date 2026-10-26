@@ -74,7 +74,7 @@ arm64 binary, so it should work, and nothing was run on arm64.
 
 The image is published on Docker Hub as `mdiazm01/remix3-local-rag-agent`, with the tags `latest`,
 `0.1.0` and `68c77ba`, built with the labels `revision`, `version` and `created` added. The same
-image is on GitHub's container registry, `ghcr.io/migueldiaz66/remix3-local-rag-agent`, private
-until it is made public and connected to this repository in the package settings. The details are in
+image is on GitHub's container registry, `ghcr.io/migueldiaz66/remix3-local-rag-agent`, public, and
+connected to this repository. The details are in
 [docs/image-registries.md](docs/image-registries.md), and the compose file names the Docker Hub
 image, so building it locally produces the name that was published.

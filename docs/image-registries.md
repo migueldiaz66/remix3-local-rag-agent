@@ -12,8 +12,8 @@ The image is built by the [Dockerfile](../Dockerfile) and used by
 | | Docker Hub | GitHub Container Registry |
 |---|---|---|
 | Address | `docker.io/mdiazm01/remix3-local-rag-agent` | `ghcr.io/migueldiaz66/remix3-local-rag-agent` |
-| State | **Published** on 26 October 2026, 17:13 to 17:14 UTC | **Published** on 26 October 2026, 17:36 to 17:37 UTC, but private |
-| Visibility | Public, checked through Docker Hub's API | **Private**, checked through GitHub's API; changed in the web page |
+| State | **Published** on 26 October 2026, 17:13 to 17:14 UTC | **Published** on 26 October 2026, 17:36 to 17:37 UTC; connected to the repository |
+| Visibility | Public, checked through Docker Hub's API | **Public** since the author changed it, checked without credentials: a pull token was issued and the manifest answered 200 |
 | Tags | `latest`, `0.1.0`, `68c77ba` | `latest`, `0.1.0`, `68c77ba` |
 | Platform | `linux/amd64` | `linux/amd64` |
 | Page | <https://hub.docker.com/r/mdiazm01/remix3-local-rag-agent> | <https://github.com/users/migueldiaz66/packages/container/package/remix3-local-rag-agent> |
@@ -83,18 +83,22 @@ image counts one pull per architecture.
 versions that GitHub's API lists as created between 17:36:46 and 17:37:33 UTC: the index that
 carries the three tags, the `linux/amd64` image, and the provenance record.
 
-**Two steps are left, in the package's settings page**, at
-<https://github.com/users/migueldiaz66/packages/container/remix3-local-rag-agent/settings>:
+**Public and connected.** Two steps were needed, and both were done by the author in GitHub's
+web pages, because the API offers neither.
 
-1. **Make it public.** It is private, so only the author can pull it. Under the danger zone,
-   change the visibility to public.
-2. **Connect it to the repository.** GitHub's API reports no repository for the package. The
-   `source` label is in the image's configuration, and the link was not made automatically; the
-   cause was not investigated. Connect `migueldiaz66/remix3-local-rag-agent` in the same page.
+1. **Public.** The author changed the visibility in the package's settings. A request for the
+   manifest with no credentials now gets a pull token and a 200. Before the change, the same
+   request was denied with HTTP 403 and "invalid token".
+2. **Connected to the repository.** After the push, GitHub's API reported no repository for the
+   package, and the Packages box in the repository's right-hand column said "No packages
+   published", even though the package existed. The `source` label is in the image's
+   configuration, and the link was not made automatically; the cause was not investigated. The
+   author then used "Connect repository" on the package's page. The API now reports
+   `migueldiaz66/remix3-local-rag-agent` as the package's repository, and the repository's page no
+   longer says "No packages published". The package's page is
+   <https://github.com/users/migueldiaz66/packages/container/package/remix3-local-rag-agent>.
 
-Until the first step is done, `docker pull ghcr.io/migueldiaz66/remix3-local-rag-agent` fails for
-everyone but the author: a request for the manifest with no credentials was denied with HTTP 403
-and "invalid token". The compose file does not depend on it: it names the Docker Hub address.
+The compose file depends on neither step: it names the Docker Hub address.
 
 **Limits.** GitHub's billing page says storage and bandwidth for container images are currently
 free for public packages, with at least a month's notice before that changes, and states no pull
