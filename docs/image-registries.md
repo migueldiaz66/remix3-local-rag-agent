@@ -1,7 +1,7 @@
 # Where the image is stored: Docker Hub and GitHub
 
-The app image of this project is stored on two registries, or is meant to be. This document says
-where, what is there, how to pull it, who can push to it and with what, and what is not finished.
+The app image of this project is stored on two registries. This document says where, what is
+there, how to pull it, who can push to it and with what, and what is not finished.
 The image is built by the [Dockerfile](../Dockerfile) and used by
 [docker/compose.stack.yml](../docker/compose.stack.yml). What it contains is in
 [Dockerfile_README.md](../Dockerfile_README.md), and its measured numbers are in
@@ -12,11 +12,14 @@ The image is built by the [Dockerfile](../Dockerfile) and used by
 | | Docker Hub | GitHub Container Registry |
 |---|---|---|
 | Address | `docker.io/mdiazm01/remix3-local-rag-agent` | `ghcr.io/migueldiaz66/remix3-local-rag-agent` |
-| State | **Published** on 26 October 2026, 17:13 to 17:14 UTC | **Not published**: the push was refused |
-| Visibility | Public, checked through Docker Hub's API | Not applicable yet |
-| Tags | `latest`, `0.1.0`, `68c77ba` | none |
-| Platform | `linux/amd64` | none |
-| Page | <https://hub.docker.com/r/mdiazm01/remix3-local-rag-agent> | <https://github.com/migueldiaz66?tab=packages> once it exists |
+| State | **Published** on 26 October 2026, 17:13 to 17:14 UTC | **Published** on 26 October 2026, 17:36 to 17:37 UTC, but private |
+| Visibility | Public, checked through Docker Hub's API | **Private**, checked through GitHub's API; changed in the web page |
+| Tags | `latest`, `0.1.0`, `68c77ba` | `latest`, `0.1.0`, `68c77ba` |
+| Platform | `linux/amd64` | `linux/amd64` |
+| Page | <https://hub.docker.com/r/mdiazm01/remix3-local-rag-agent> | <https://github.com/users/migueldiaz66/packages/container/package/remix3-local-rag-agent> |
+
+Both hold the same image: the index digest `sha256:5bf7f013...944ed1` of section 2 is identical on
+both registries.
 
 ## 2. Docker Hub
 
@@ -49,10 +52,10 @@ docker compose -f docker/compose.stack.yml up
 The second command starts the whole stack. It pulls the app image from Docker Hub, because the
 compose file names it, and builds it from the repository only with `--build`.
 
-**Checked from outside.** With an empty Docker configuration, which is an anonymous user,
-`docker manifest inspect` listed the image, and `docker pull` downloaded it. Started alone, it
-answered the home page with status 200, was healthy after 40 s, ran as the user `node`, and carried
-the labels above.
+**Checked from outside.** Docker Hub's API reports the repository as public. With an empty Docker
+configuration, which is an anonymous user, and after the local tags of that name were removed,
+`docker pull` downloaded the image. Started alone, it answered the home page with status 200, was
+healthy after 40 s, ran as the user `node`, and carried the labels above.
 
 **Limits.** Docker Hub counts pulls: an anonymous client may pull 100 times in 6 hours per IP
 address, and a free account 200 (Docker's usage page, read for this project). A multi-architecture
@@ -60,33 +63,42 @@ image counts one pull per architecture.
 
 ## 3. GitHub Container Registry
 
-**What happened.** The push of `ghcr.io/migueldiaz66/remix3-local-rag-agent:0.1.0` was refused:
+**What happened.** Two attempts.
 
-```
-error from registry: permission_denied: The token provided does not match expected scopes.
-```
+1. The first push used the fine-grained token of the repository and was refused:
 
-The token was the fine-grained personal access token used for the repository. As far as the
-refusal shows, a token of that kind is not accepted for container packages. The login itself
-succeeded; only the push was denied. Nothing was published there.
+   ```
+   error from registry: permission_denied: The token provided does not match expected scopes.
+   ```
 
-**How to finish it.** Two ways, and the choice is the author's.
+   A token of that kind is not accepted for container packages. The login succeeded; only the
+   push was denied.
+2. The author then created a classic personal access token with the `write:packages` scope, among
+   many others (section 4). The first push with it, of all three tags at once, created the package
+   and uploaded the layers and the provenance record, and then ended with `error from registry:
+   denied`. Pushing the tags one at a time, `0.1.0`, `68c77ba` and then `latest`, succeeded, with
+   the same digest as on Docker Hub. The cause of the first denial was not investigated.
 
-1. **A classic token with `write:packages`**, created at <https://github.com/settings/tokens>,
-   used once to push the same six tags from the local image, then revoked.
-2. **A GitHub Action** that builds and pushes with the `GITHUB_TOKEN` the workflow receives, with
-   `packages: write`. It needs no token to be created, and it can build `linux/amd64` and
-   `linux/arm64` together. The workflow file lives in `.github/workflows/`, so pushing it needs a
-   token with the Workflows permission, or the file can be added in the GitHub web page.
+**What is stored.** A package `remix3-local-rag-agent` under the account `migueldiaz66`, with three
+versions that GitHub's API lists as created between 17:36:46 and 17:37:33 UTC: the index that
+carries the three tags, the `linux/amd64` image, and the provenance record.
 
-**After the first push.** A new package on ghcr.io starts private, to be confirmed at the first
-push. Its visibility is changed in the package's settings on GitHub, not through an API, and the
-`source` label already in the image links the package to this repository. Until then the compose
-file does not depend on it: it names the Docker Hub address.
+**Two steps are left, in the package's settings page**, at
+<https://github.com/users/migueldiaz66/packages/container/remix3-local-rag-agent/settings>:
+
+1. **Make it public.** It is private, so only the author can pull it. Under the danger zone,
+   change the visibility to public.
+2. **Connect it to the repository.** GitHub's API reports no repository for the package. The
+   `source` label is in the image's configuration, and the link was not made automatically; the
+   cause was not investigated. Connect `migueldiaz66/remix3-local-rag-agent` in the same page.
+
+Until the first step is done, `docker pull ghcr.io/migueldiaz66/remix3-local-rag-agent` fails for
+everyone but the author: a request for the manifest with no credentials was denied with HTTP 403
+and "invalid token". The compose file does not depend on it: it names the Docker Hub address.
 
 **Limits.** GitHub's billing page says storage and bandwidth for container images are currently
 free for public packages, with at least a month's notice before that changes, and states no pull
-limit.
+limit. This was read for the project and applies once the package is public.
 
 ## 4. Who can push, and how it was done
 
@@ -95,10 +107,15 @@ limit.
   A screenshot of the page that shows it is kept in `.secrets/`, a folder that git and Docker
   both ignore (`gitignore_README.md`). Revoke the token in Docker Hub's account settings when it
   is no longer needed, then delete that file.
+- **GitHub, the container registry:** the account `migueldiaz66`. The push used a classic personal
+  access token that expires on 25 November 2026. The only scope the push needed is
+  `write:packages`. The token has far more, among them `repo`, `workflow`, `delete_repo`,
+  `delete:packages` and `admin:org`, so it can do much more than push an image. It should be
+  revoked now that the image is pushed. A screenshot of the page that showed it is in `.secrets/`
+  too, ignored in the same way.
+- **GitHub, the repository:** pushed with a fine-grained token, which cannot write packages.
 - **No stored login.** Each push used a throwaway Docker configuration folder, created for the
   push and deleted after it, so no credential reached the machine's Docker login store.
-- **GitHub:** the repository is pushed with a fine-grained token. The container registry needs
-  one of the two ways above.
 
 ## 5. How it was built
 

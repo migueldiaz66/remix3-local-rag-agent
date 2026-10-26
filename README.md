@@ -157,8 +157,9 @@ models once, stores the article, and only then starts the app. Only your own mac
   downloaded models and the vector store.
 - The app image is 471 MB on disk, 120 MB to download, and is published on Docker Hub:
   `docker pull mdiazm01/remix3-local-rag-agent:0.1.0`. The compose file pulls it by itself, and
-  builds it from the repository only with `--build`. It is for `linux/amd64`. The push to GitHub's
-  container registry was refused and is not done; where it is stored, and why, is in
+  builds it from the repository only with `--build`. It is for `linux/amd64`. The same image is on
+  GitHub's container registry, `ghcr.io/migueldiaz66/remix3-local-rag-agent`, which is private
+  until its owner makes it public. Where each copy is stored is in
   [docs/image-registries.md](docs/image-registries.md). The order of the services is in
   [docker/compose.stack.yml_README.md](docker/compose.stack.yml_README.md), and the image itself
   in [Dockerfile_README.md](Dockerfile_README.md).

@@ -104,10 +104,11 @@ leave out the `ollama` and `models` services.
 ## Where the image is published
 
 It is published on Docker Hub, as `mdiazm01/remix3-local-rag-agent` with the tags `latest`, `0.1.0`
-and `68c77ba`. The push to GitHub's registry was refused, because the token in use cannot write
-container packages. What is stored, the digests, how it was pushed and how to finish the GitHub
-side are in [docs/image-registries.md](../docs/image-registries.md). The comparison that led to
-considering both:
+and `68c77ba`, and on GitHub's registry as `ghcr.io/migueldiaz66/remix3-local-rag-agent` with the
+same tags and the same digest. The GitHub copy is private until it is made public in the package
+settings. What is stored, the digests, how it was pushed and what is left to do are in
+[docs/image-registries.md](../docs/image-registries.md). The comparison that led to publishing
+on both:
 
 | | GitHub Container Registry, `ghcr.io` | Docker Hub |
 |---|---|---|

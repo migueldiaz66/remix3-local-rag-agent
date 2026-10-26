@@ -5375,8 +5375,9 @@ Ollama image 8.43 GB, the first start took 18 min 33 s on a slow connection, a s
 everything downloaded 39 s, and a RAG question 53 s the first time and 10 s after that. Two later
 runs on a busier laptop gave 61 and 103 s, and 12 to 31 s: the raw numbers, the three sizes of the
 image and the CPU and memory of each container are in `docs/docker-run.md`. The image is
-published on Docker Hub, `mdiazm01/remix3-local-rag-agent`, and `docs/image-registries.md` says
-what is stored there; the push to GitHub's container registry was refused.
+published on Docker Hub, `mdiazm01/remix3-local-rag-agent`, and on GitHub's container registry,
+`ghcr.io/migueldiaz66/remix3-local-rag-agent`, where it is still private; `docs/image-registries.md`
+says what is stored where.
 
 ### 13.3 For implementers
 
