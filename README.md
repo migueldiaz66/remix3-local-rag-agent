@@ -1,6 +1,6 @@
 # remix3-local-rag-agent
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047253.svg)](https://doi.org/10.5281/zenodo.24047253)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047252.svg)](https://doi.org/10.5281/zenodo.24047252)
 
 > **Docker image.** `docker pull mdiazm01/remix3-local-rag-agent`, also on
 > `ghcr.io/migueldiaz66/remix3-local-rag-agent`. Windows PCs and Intel Macs get the `linux/amd64`
