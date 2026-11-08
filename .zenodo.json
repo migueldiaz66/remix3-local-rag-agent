@@ -1,0 +1,28 @@
+{
+  "upload_type": "software",
+  "title": "remix3-local-rag-agent: a minimal retrieval-augmented generation pipeline running on a local machine",
+  "creators": [
+    { "name": "Díaz Macedo, Miguel" }
+  ],
+  "license": "mit",
+  "description": "<p>Proof of concept of the basic elements of retrieval-augmented generation (RAG), all of them local: no cloud service and no API key. A Remix 3 page draws the pipeline as a diagram next to a chat where the same question can be asked three ways &mdash; a plain large language model, RAG over a Wikipedia article, and an agent &mdash; to see what each one adds. Inference runs on Ollama and vectors are stored in Qdrant. The embedding step and the chat UI are written by hand, without a framework, so that the code shows how those components work.</p><p>The write-up, with the six components, the time measured for each stage on a 2016 laptop and the limits observed, is at <a href=\"https://migueldiazmacedo.com/laboratorio/rag-minimo-local/\">https://migueldiazmacedo.com/laboratorio/rag-minimo-local/</a>.</p><p>The software is MIT-licensed. The text in <code>data/rag-wikipedia.md</code> comes from Wikipedia and stays under CC BY-SA 4.0; see <code>data/NOTICE.md</code>.</p>",
+  "keywords": [
+    "retrieval-augmented generation",
+    "RAG",
+    "large language models",
+    "embeddings",
+    "Ollama",
+    "Qdrant",
+    "Remix",
+    "proof of concept",
+    "local inference"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://migueldiazmacedo.com/laboratorio/rag-minimo-local/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-article",
+      "scheme": "url"
+    }
+  ]
+}
