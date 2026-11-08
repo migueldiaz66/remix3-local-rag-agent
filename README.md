@@ -1,6 +1,6 @@
 # remix3-local-rag-agent
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/migueldiaz66/remix3-local-rag-agent) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047253.svg)](https://doi.org/10.5281/zenodo.24047253)
 
 > **Docker image.** `docker pull mdiazm01/remix3-local-rag-agent`, also on
 > `ghcr.io/migueldiaz66/remix3-local-rag-agent`. Windows PCs and Intel Macs get the `linux/amd64`
@@ -11,6 +11,8 @@
 elements of retrieval-augmented generation (RAG), all of them local: no cloud service and no API
 key. A minimal web page draws the RAG pipeline as a diagram, next to a chat where you can ask the
 same question three ways and see what each way adds.
+
+**Write-up.** [Un RAG sin nube ni llave de API: anatomía de un montaje mínimo](https://migueldiazmacedo.com/laboratorio/rag-minimo-local/) documents this project in Spanish: the six components and what each one does, the time each stage took on a 2016 laptop, and the limits found.
 
 The page is also a trial. [Remix 3](https://remix.run), a web framework rebuilt on web
 standards, without React, and designed to be built with coding agents, is the candidate this POC
